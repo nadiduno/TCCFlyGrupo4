@@ -11,11 +11,11 @@ Modelo preditivo de potencial de empregabilidade e mobilidade financeira para eg
 
 ## 📌 Contexto
 
-A evasão escolar é um dos principais desafios da educação brasileira e está associada a diversos fatores econômicos, sociais e demográficos — renda familiar, região de residência, gênero, raça/cor, acesso a equipamento e internet, sobrecarga de trabalho e cuidado, entre outros.
+A evasão escolar é um dos principais desafios da educação brasileira e está associada a diversos fatores econômicos, sociais e demográficos, como renda familiar, região de residência, gênero, raça/cor, acesso a equipamento e internet, sobrecarga de trabalho e cuidado, entre outros.
 
-O **Passo Firme** parte de uma constatação central: quem desiste de estudar raramente o faz por falta de vontade, mas pelo **acúmulo de obstáculos** — cansaço do trabalho, aperto financeiro, isolamento e questões de saúde mental. A proposta une tecnologia e apoio humano: modelos preditivos em Python identificam estudantes em risco de evasão, e uma camada de IA aciona a rede de acolhimento da ONG (mentoria, escuta ativa, suporte socioemocional) **antes que a desistência aconteça**.
+O projeto **Passo Firme** parte de uma constatação central: quem desiste de estudar raramente o faz por falta de vontade, mas pelo **acúmulo de obstáculos** — cansaço do trabalho, aperto financeiro, isolamento e questões de saúde mental. A proposta une tecnologia e apoio humano por meio de modelos preditivos em Python que identificam estudantes em risco de evasão, e uma camada de IA que aciona a rede de acolhimento da ONG Fly Educação ( com possibilidades de mentoria, escuta ativa, suporte socioemocional) **antes que a desistência aconteça**.
 
-Diferente de outros projetos, aqui o "cliente" é a própria **Fly Educação**. O perfil das inscritas — maioria preta e parda, escolarizada e jovem-adulta (78% pretas + pardas) — já é insumo para relatório institucional e captação de recursos. A entrega de ouro do modelo é uma **lista de fatores de risco acionáveis**: se computador/internet pesarem → empréstimo de equipamento; se horário pesar → turmas alternativas; se confiança inicial pesar → mentoria reforçada nas primeiras semanas.
+O perfil das inscritas — maioria preta e parda, escolarizada e jovem-adulta (78% pretas + pardas). A entrega de ouro do modelo é uma **lista de fatores de risco acionáveis**: se computador/internet pesarem → empréstimo de equipamento; se horário pesar → turmas alternativas; se confiança inicial ou quesões de saúde mental pesarem → mentoria reforçada e acolhimento qualificado logo nas primeiras semanas.
 
 **Pergunta principal:** Como fatores socioeconômicos e demográficos influenciam a evasão escolar e de que forma uma IA orientadora pode auxiliar estudantes em situação de vulnerabilidade por meio do acesso a informações sobre programas de apoio e permanência?
 
@@ -78,7 +78,7 @@ Decisões de projeto que valem como convenção para todo o notebook:
 
 ---
 
-## 📁 Estrutura das pastas
+## Estrutura das pastas
 
 Arquivos atuais do repositório:
 
