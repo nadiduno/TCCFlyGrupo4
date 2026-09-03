@@ -21,7 +21,7 @@ Diferente de outros projetos, aqui o "cliente" é a própria **Fly Educação**.
 
 ---
 
-## 🏗️ Visão geral da arquitetura
+##  Visão geral da arquitetura
 
 O pipeline segue o fluxo clássico de um projeto de ciência de dados, do dado bruto ao modelo:
 
