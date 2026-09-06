@@ -1,0 +1,1264 @@
+<title>Passo Firme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --ground:#faf6ef; --surface:#fffdf8; --surface-2:#f3ede1; --surface-3:#ebe3d4;
+  --ink:#141414; --ink-soft:#4a463f; --muted:#736c60;
+  --navy:#0f2942; --navy-2:#16354f;
+  --teal:#1f7a8c; --teal-deep:#155c6a; --teal-soft:#e0eff1;
+  --coral:#e76f51; --coral-deep:#c2512f; --coral-soft:#fbe7e0;
+  --amber:#c9820e; --amber-soft:#faf0da;
+  --roxo:#7b5ea7; --roxo-soft:#efe9f6;
+  --rule:#e2dacb; --rule-strong:#cfc4b0;
+  --shadow:0 1px 2px rgba(15,41,66,.06), 0 8px 24px -16px rgba(15,41,66,.3);
+  --shadow-lg:0 2px 6px rgba(15,41,66,.08), 0 22px 50px -26px rgba(15,41,66,.42);
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display:"Archivo","IBM Plex Sans",system-ui,sans-serif;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);margin:0;text-wrap:balance}
+h1{font-size:23px;letter-spacing:-.014em;font-weight:700;line-height:1.1}
+h2{font-size:20px;letter-spacing:-.01em;font-weight:600;line-height:1.2}
+h3{font-size:16px;font-weight:600}
+h4{font-size:13.5px;font-weight:600}
+p{margin:0 0 .85em}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.small{font-size:13.5px;line-height:1.5}
+.dim{color:var(--muted)}
+
+/* ---------- topo ---------- */
+header.app{background:var(--navy-2);color:#e8e2d6;border-bottom:1px solid rgba(255,255,255,.09)}
+.appbar{max-width:1340px;margin:0 auto;padding:14px 22px 0;display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.brand h1{color:#fff;font-size:22px}
+.brand .tag{font-family:var(--mono);font-size:11.5px;color:#8fa9bd;letter-spacing:.02em;margin-top:3px}
+.appstats{display:flex;gap:22px;flex-wrap:wrap;margin-left:auto;font-family:var(--mono);font-size:11px;color:#8fa9bd;padding-top:5px}
+.appstats b{color:#fff;font-weight:600;font-variant-numeric:tabular-nums;display:block;font-size:15px;line-height:1.25}
+.pendflag{border:1px solid rgba(95,179,196,.6);background:rgba(31,122,140,.2);color:#a8e5f2;padding:5px 10px;border-radius:2px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;align-self:center;max-width:236px;line-height:1.45}
+.pendflag b{color:#fff;font-weight:600}
+nav.tabs{max-width:1340px;margin:0 auto;padding:0 22px;display:flex;gap:2px;overflow-x:auto}
+nav.tabs button{
+  background:transparent;border:0;border-bottom:2px solid transparent;color:#8fa9bd;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:13px 15px 11px;cursor:pointer;white-space:nowrap;font-weight:500;
+}
+nav.tabs button:hover{color:#fff}
+nav.tabs button[aria-selected="true"]{color:#fff;border-bottom-color:var(--coral)}
+.protobar{background:var(--coral-soft);border-bottom:1px solid var(--rule);color:var(--ink-soft)}
+.protobar div{max-width:1340px;margin:0 auto;padding:8px 22px;font-size:12.5px}
+.protobar b{color:var(--coral-deep)}
+
+/* ---------- layout ---------- */
+.shell{max-width:1120px;margin:0 auto;padding:26px 22px 0}
+.view{display:none}
+.view.on{display:block}
+.panel{background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow);border-radius:3px;margin-bottom:18px}
+.panel > header{padding:15px 18px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.panel > header .eyebrow{margin-bottom:3px;display:block}
+.panel .body{padding:18px}
+.panel .body.flush{padding:0}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--rule)}
+.tile{background:var(--surface);padding:15px 17px}
+.tile .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.tile .v{font-family:var(--display);font-size:29px;font-weight:700;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums}
+.tile .s{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.4;display:block}
+
+/* capacidade */
+.cap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:15px 18px;background:var(--surface-2);border-bottom:1px solid var(--rule)}
+.cap label{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.cap input[type=range]{width:210px;accent-color:var(--teal)}
+.cap .val{font-family:var(--display);font-size:22px;font-weight:700;color:var(--teal-deep);font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
+.cap .note{font-size:12.5px;color:var(--muted);max-width:44ch;line-height:1.45}
+
+/* tabela fila */
+.tblwrap{overflow-x:auto}
+table.fila{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+table.fila th{
+  text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;padding:11px 14px;background:var(--surface-2);
+  border-bottom:1px solid var(--rule-strong);position:sticky;top:0;
+}
+table.fila td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:middle}
+table.fila tr:last-child td{border-bottom:0}
+table.fila tbody tr{cursor:pointer}
+table.fila tbody tr:hover{background:var(--surface-2)}
+table.fila tbody tr.sel{background:var(--teal-soft)}
+.pos{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.aid{font-family:var(--mono);font-size:13.5px;color:var(--navy);font-weight:500}
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap;font-weight:500;
+}
+.chip.maior{background:var(--coral-soft);border-color:var(--coral);color:var(--coral-deep)}
+.chip.media{background:var(--amber-soft);border-color:var(--amber);color:var(--amber)}
+.chip.menor{background:var(--surface-2);border-color:var(--rule-strong);color:var(--muted)}
+.chip.tr{background:var(--roxo-soft);border-color:var(--roxo);color:var(--roxo);text-transform:none;letter-spacing:.01em;font-size:11px}
+.chip.tr.unk{background:transparent;border-style:dashed;border-color:var(--rule-strong);color:var(--muted)}
+.chip.ok{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-deep)}
+.trilhas{display:flex;gap:5px;flex-wrap:wrap}
+.stt{font-size:12.5px;color:var(--muted)}
+.stt.done{color:var(--teal-deep);font-weight:500}
+
+/* controles */
+.ctrls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-left:auto}
+input[type=text],input[type=search],select,textarea{
+  font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--surface-2);
+  border:1px solid var(--rule-strong);border-radius:2px;padding:8px 10px;
+}
+textarea{font-family:var(--mono);font-size:13px;line-height:1.6;width:100%;resize:vertical}
+select{font-family:var(--mono);font-size:12.5px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,tr:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;cursor:pointer;border-radius:2px;transition:background .12s,border-color .12s,color .12s}
+.b1{background:var(--teal);color:#fff;border:1px solid var(--teal);padding:9px 15px}
+.b1:hover{background:var(--teal-deep);border-color:var(--teal-deep)}
+.b2{background:transparent;color:var(--navy);border:1px solid var(--rule-strong);padding:9px 14px}
+.b2:hover{border-color:var(--navy)}
+.b3{background:var(--navy);color:var(--ground);border:1px solid var(--navy);padding:9px 15px}
+.b3:hover{background:#0a1e31}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.ok-msg{font-family:var(--mono);font-size:11px;color:var(--teal-deep);letter-spacing:.04em}
+
+/* ficha */
+.fichagrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+@media (max-width:560px){.fichagrid{grid-template-columns:repeat(2,1fr)}}
+.fichagrid > div{background:var(--surface);padding:11px 13px}
+.fichagrid .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px}
+.fichagrid .v{font-size:14.5px;color:var(--ink);font-weight:500}
+.fichagrid .v.none{color:var(--amber);font-weight:400;font-style:italic}
+.locked{background:var(--surface-2);border:1px dashed var(--rule-strong);padding:12px 14px;margin-top:12px;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.locked b{color:var(--navy)}
+.gaps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.gaps li{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.45}
+.gaps .t{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border-radius:2px;flex:none;margin-top:3px;min-width:96px;text-align:center;border:1px solid}
+.t.falta{background:var(--amber-soft);border-color:var(--amber);color:var(--amber)}
+.t.base{background:var(--coral-soft);border-color:var(--coral);color:var(--coral-deep)}
+.t.perg{background:var(--roxo-soft);border-color:var(--roxo);color:var(--roxo)}
+
+/* roteiro */
+.qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.qlist li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;line-height:1.5}
+.qlist .t{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--teal-deep);border:1px solid var(--teal);background:var(--teal-soft);padding:2px 7px;border-radius:2px;flex:none;margin-top:3px;min-width:112px;text-align:center}
+
+/* draft */
+.draft{background:var(--surface-2);border:1px solid var(--rule-strong);border-left:3px solid var(--teal);padding:14px 15px;font-size:15px;line-height:1.68;white-space:pre-wrap;color:var(--ink)}
+.draft[contenteditable="true"]:focus{outline:2px solid var(--teal);outline-offset:1px}
+.selo{margin-top:14px;padding:11px 13px;background:var(--surface-2);border:1px dashed var(--rule-strong);font-family:var(--mono);font-size:11px;line-height:1.75;color:var(--muted)}
+.selo b{color:var(--ink-soft);font-weight:500}
+
+/* guarda */
+.marked{background:var(--surface-2);border:1px solid var(--rule-strong);padding:13px 15px;font-size:14.5px;line-height:1.8;white-space:pre-wrap}
+mark.hit{background:var(--coral-soft);color:var(--coral-deep);border-bottom:2px solid var(--coral);padding:0 2px}
+mark.warn{background:var(--amber-soft);color:var(--amber);border-bottom:2px solid var(--amber);padding:0 2px}
+.findings{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.findings li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.5}
+.sev{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border-radius:2px;flex:none;margin-top:3px;min-width:74px;text-align:center;border:1px solid}
+.sev.block{background:var(--coral-soft);border-color:var(--coral);color:var(--coral-deep)}
+.sev.alert{background:var(--amber-soft);border-color:var(--amber);color:var(--amber)}
+.sev.ok{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-deep)}
+.verdict{margin-top:13px;padding:11px 13px;font-family:var(--mono);font-size:12px;border:1px solid;border-radius:2px;line-height:1.55}
+.verdict.block{background:var(--coral-soft);border-color:var(--coral);color:var(--coral-deep)}
+.verdict.ok{background:var(--teal-soft);border-color:var(--teal);color:var(--teal-deep)}
+
+/* tabelas de dados */
+.dtable{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
+.dtable th{text-align:left;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:0 12px 9px 0;border-bottom:1px solid var(--rule-strong)}
+.dtable td{padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.dtable tr:last-child td{border-bottom:0}
+.said{color:var(--teal-deep)}
+.nope{color:var(--amber)}
+
+/* chat */
+aside.chat{
+  position:fixed;top:0;right:0;bottom:0;width:min(390px,100%);z-index:80;
+  background:var(--surface);border-left:1px solid var(--rule-strong);
+  box-shadow:-18px 0 46px -28px rgba(15,41,66,.5);
+  display:flex;flex-direction:column;
+  transform:translateX(101%);transition:transform .22s ease;
+}
+aside.chat.open{transform:translateX(0)}
+.backdrop{position:fixed;inset:0;background:rgba(15,41,66,.28);z-index:75;opacity:0;pointer-events:none;transition:opacity .22s ease}
+.backdrop.on{opacity:1;pointer-events:auto}
+.chatclose{background:transparent;border:1px solid rgba(255,255,255,.28);color:#cfe0ee;padding:5px 10px;margin-left:auto}
+.chatclose:hover{border-color:#fff;color:#fff}
+aside.chat > header{padding:13px 16px;background:var(--navy-2);color:#fff;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+aside.chat > header .eyebrow{color:#8fa9bd;display:block}
+aside.chat > header h3{color:#fff;font-size:15px;margin-top:2px}
+.log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:13px}
+.msg{font-size:14px;line-height:1.55;max-width:96%}
+.msg.u{align-self:flex-end;background:var(--navy);color:var(--ground);padding:9px 12px;border-radius:10px 10px 2px 10px}
+.msg.a{align-self:flex-start;background:var(--surface-2);border:1px solid var(--rule);padding:10px 13px;border-radius:10px 10px 10px 2px;color:var(--ink)}
+.msg.a .src{display:block;margin-top:7px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted)}
+.msg.a.refuse{background:var(--coral-soft);border-color:var(--coral)}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 12px}
+.sugg button{background:transparent;border:1px solid var(--rule-strong);color:var(--ink-soft);font-family:var(--sans);font-size:12.5px;text-transform:none;letter-spacing:0;padding:6px 10px;border-radius:13px;line-height:1.3}
+.sugg button:hover{border-color:var(--teal);color:var(--teal-deep)}
+.chatin{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--rule);background:var(--surface-2)}
+.chatin input{flex:1;background:var(--surface)}
+
+.hint{font-size:13px;color:var(--muted);line-height:1.5;margin-top:10px}
+.kv{display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+pre.code{background:var(--navy-2);color:#dbe6ef;padding:14px 16px;border-radius:3px;overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.65;margin:0}
+pre.code .c{color:#7fa2bd}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+label.fld{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.fldrow{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.fldrow > div{flex:1;min-width:150px}
+.pagehead{margin:0 0 20px}
+.pagehead .eyebrow{display:block;margin-bottom:7px}
+.pagehead h2{font-size:26px;letter-spacing:-.016em}
+.pagehead p{margin:7px 0 0;color:var(--ink-soft);max-width:62ch;font-size:15px}
+.pager{display:flex;gap:12px;align-items:stretch;justify-content:space-between;margin:6px 0 34px}
+.pager a{
+  flex:1;display:flex;flex-direction:column;gap:3px;text-decoration:none;
+  border:1px solid var(--rule);background:var(--surface);padding:12px 15px;border-radius:3px;
+  box-shadow:var(--shadow);max-width:330px;
+}
+.pager a:hover{border-color:var(--teal)}
+.pager a.next{text-align:right;margin-left:auto}
+.pager .d{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pager .t{font-family:var(--display);font-size:15.5px;font-weight:600;color:var(--navy)}
+.pager .sp{flex:1;max-width:330px}
+.chatbtn{
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.28);color:#e8e2d6;
+  padding:8px 14px;align-self:center;
+}
+.chatbtn:hover{background:rgba(255,255,255,.16);color:#fff}
+footer.app{max-width:1120px;margin:0 auto;padding:6px 22px 44px;color:var(--muted);font-size:12.5px;line-height:1.6}
+
+@media (max-width:640px){
+  .shell{padding:14px}
+  .appbar{padding:12px 14px 0}
+  nav.tabs{padding:0 14px}
+  .appstats{margin-left:0;gap:16px}
+  .qlist .t,.gaps .t{min-width:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="app">
+  <div class="appbar">
+    <div class="brand">
+      <h1>Passo Firme</h1>
+      <div class="tag">Chegar antes da evasão, nunca rotular ninguém.</div>
+    </div>
+    <div class="appstats">
+      <span>acompanhadas<b class="num" id="stAcomp">0</b></span>
+      <span>evasão histórica<b class="num" id="stTaxa">0%</b></span>
+      <span>atenção maior<b class="num" id="stMaior">0</b></span>
+      <span>contatos feitos<b class="num" id="stCont">0</b></span>
+    </div>
+    <div class="pendflag" id="pendflag">Estação 14: <b>p = 0,0244</b>. O modelo tira nota melhor do que o acaso conseguiria.</div>
+    <button class="chatbtn" id="btnChat" aria-expanded="false" aria-controls="chatDrawer">Copiloto</button>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-v="painel" aria-selected="true">Painel</button>
+    <button role="tab" data-v="ficha" aria-selected="false">Ficha da aluna</button>
+    <button role="tab" data-v="mensagens" aria-selected="false">Mensagens</button>
+    <button role="tab" data-v="registro" aria-selected="false">Registro da conversa</button>
+    <button role="tab" data-v="base" aria-selected="false">Base e conexão</button>
+    <button role="tab" data-v="tecnica" aria-selected="false">Ficha técnica</button>
+  </nav>
+</header>
+
+<div class="protobar"><div><b>Protótipo acadêmico.</b> Ferramenta de TCC do Grupo Ada Lovelace, Turma Fly da diversiData. Não serve para decisão sobre pessoas reais. As fichas carregadas agora são fictícias. A ordem vira real quando o arquivo da Estação 15 é carregado na aba Base e conexão.</div></div>
+
+<div class="shell">
+  <main>
+
+    <!-- ============ PAINEL ============ -->
+    <div class="view on" id="v-painel">
+      <div class="pagehead"><span class="eyebrow">Página 1 de 6</span><h2>Painel</h2><p>Por quem começar esta semana, e quantas alunas cabem na capacidade real da equipe.</p></div>
+      <div class="panel">
+        <div class="body flush">
+          <div class="tiles">
+            <div class="tile"><span class="k">Alunas acompanhadas</span><span class="v num" id="tAcomp">0</span><span class="s" id="tAcompS">fichas na fila carregada</span></div>
+            <div class="tile"><span class="k">Evasão no histórico</span><span class="v num" id="tTaxa">0%</span><span class="s">39 evasões em 60 alunas com desfecho conhecido, Estação 6.2</span></div>
+            <div class="tile"><span class="k">Atenção maior</span><span class="v num" id="tMaior">0</span><span class="s">definido pela capacidade da semana, não pelo modelo</span></div>
+            <div class="tile"><span class="k">Já contatadas</span><span class="v num" id="tCont">0</span><span class="s" id="tContS">registro salvo neste navegador</span></div>
+          </div>
+          <div class="cap">
+            <label for="capRange">Capacidade da semana</label>
+            <input type="range" id="capRange" min="1" max="15" value="5">
+            <span class="val num" id="capVal">5</span>
+            <span class="note">Quantas alunas a equipe consegue procurar. É este número, e não o algoritmo, que define o corte da fila. A Estação 12 mostra a conta de cada opção: alcançar mais gente custa mais conversas.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <header>
+          <div><span class="eyebrow">Fila de prioridade</span><h2>Por quem começar</h2></div>
+          <div class="ctrls">
+            <select id="fTurma"><option value="">todas as turmas</option></select>
+            <input type="search" id="fBusca" placeholder="buscar identificador">
+            <button class="b2" id="btnExport">Exportar fila</button>
+          </div>
+        </header>
+        <div class="body flush">
+          <div class="tblwrap">
+            <table class="fila">
+              <thead><tr>
+                <th style="width:44px">#</th><th>Identificador</th><th style="width:64px">Turma</th>
+                <th style="width:104px">Atenção</th><th>Trilhas de apoio possíveis</th><th style="width:132px">Contato</th>
+              </tr></thead>
+              <tbody id="filaBody"></tbody>
+            </table>
+          </div>
+          <div style="padding:14px 18px;border-top:1px solid var(--rule);background:var(--surface-2)">
+            <p class="small dim" style="margin:0">A faixa de atenção é posição na fila, não probabilidade. O risco calculado pelo modelo nunca aparece nesta tela nem em nenhuma mensagem, porque a curva de calibração é instável com este n (Estação 13.3). As trilhas são <b>encaminhamentos possíveis</b> a oferecer depois da escuta, nunca o motivo pelo qual a aluna está na fila: a permutação da Estação 13.2 aponta escolaridade, idade, região e LGBT+, e nenhum desses pode virar assunto de conversa.</p>
+          </div>
+        </div>
+      </div>
+      <nav class="pager">
+        <span class="sp"></span>
+        <a href="#" class="next" data-goto="ficha"><span class="d">Próxima página</span><span class="t">Ficha da aluna</span></a>
+      </nav>
+    </div>
+
+    <!-- ============ FICHA ============ -->
+    <div class="view" id="v-ficha">
+      <div class="pagehead"><span class="eyebrow">Página 2 de 6</span><h2>Ficha da aluna</h2><p>O que a inscrição respondeu, o que ficou em branco, e as perguntas que puxam a conversa.</p></div>
+      <div class="panel">
+        <header>
+          <div><span class="eyebrow">Ficha</span><h2 id="fichaTitulo">Nenhuma aluna selecionada</h2></div>
+          <div class="ctrls">
+            <select id="fichaSel"></select>
+            <button class="b1" id="btnIrMsg">Gerar mensagem</button>
+          </div>
+        </header>
+        <div class="body" id="fichaBody"></div>
+      </div>
+      <nav class="pager">
+        <a href="#" data-goto="painel"><span class="d">Página anterior</span><span class="t">Painel</span></a>
+        <a href="#" class="next" data-goto="mensagens"><span class="d">Próxima página</span><span class="t">Mensagens</span></a>
+      </nav>
+    </div>
+
+    <!-- ============ MENSAGENS ============ -->
+    <div class="view" id="v-mensagens">
+      <div class="pagehead"><span class="eyebrow">Página 3 de 6</span><h2>Mensagens</h2><p>Rascunhos por trilha e canal. A guarda de linguagem roda antes de o texto aparecer.</p></div>
+      <div class="panel">
+        <header><div><span class="eyebrow">Gerador de rascunhos</span><h2>A gestora revisa e envia. A ferramenta nunca envia.</h2></div></header>
+        <div class="body">
+          <div class="fldrow">
+            <div><label class="fld" for="msgAluna">Aluna</label><select id="msgAluna" style="width:100%"></select></div>
+            <div><label class="fld" for="msgTrilha">Trilha</label><select id="msgTrilha" style="width:100%">
+              <option value="abertura">Abertura de escuta, sem tema</option>
+              <option value="digital">Acesso digital</option>
+              <option value="cuidado">Rede de cuidado</option>
+              <option value="logistica">Logística e horário</option>
+              <option value="retorno">Retomar contato</option>
+            </select></div>
+            <div><label class="fld" for="msgCanal">Canal</label><select id="msgCanal" style="width:100%">
+              <option value="whats">WhatsApp</option><option value="email">E-mail</option>
+            </select></div>
+            <div style="flex:none"><button class="b1" id="btnGerarMsg">Gerar rascunho</button></div>
+          </div>
+          <p class="hint">Os textos de trilha oferecem o recurso <b>a todas as alunas da turma</b>, em vez de supor que aquela aluna tem aquele problema. Essa é a diferença entre encaminhamento e diagnóstico: o modelo não sabe qual é a barreira dela, e supor errado quebra a confiança logo na primeira mensagem.</p>
+          <div id="msgOut" style="margin-top:18px"></div>
+        </div>
+      </div>
+      <nav class="pager">
+        <a href="#" data-goto="ficha"><span class="d">Página anterior</span><span class="t">Ficha da aluna</span></a>
+        <a href="#" class="next" data-goto="registro"><span class="d">Próxima página</span><span class="t">Registro da conversa</span></a>
+      </nav>
+    </div>
+
+    <!-- ============ REGISTRO ============ -->
+    <div class="view" id="v-registro">
+      <div class="pagehead"><span class="eyebrow">Página 4 de 6</span><h2>Registro da conversa</h2><p>O que a aluna contou vira linha estruturada: é a coluna de engajamento que a base não tem.</p></div>
+      <div class="panel">
+        <header>
+          <div><span class="eyebrow">Depois da conversa</span><h2>O que a conversa ensinou que a base não sabia</h2></div>
+          <div class="ctrls"><select id="regAluna"></select></div>
+        </header>
+        <div class="body">
+          <p class="small dim" style="margin-top:0">A limitação L5 diz que não existe nenhuma variável de engajamento nesta base: as 8 do modelo são declaradas na inscrição, antes do curso começar. Cada conversa registrada aqui vira uma linha da coluna que hoje não existe. Em três turmas isso muda o que o próximo modelo consegue enxergar.</p>
+          <label class="fld" for="regTexto">Registro em texto livre, do jeito que você escreve</label>
+          <textarea id="regTexto" rows="6"></textarea>
+          <div class="btnrow">
+            <button class="b1" id="btnExtrair">Extrair campos</button>
+            <button class="b3" id="btnSalvarReg">Salvar no histórico</button>
+            <button class="b2" id="btnLimparReg">Limpar</button>
+            <span class="ok-msg" id="regOk" hidden>salvo</span>
+          </div>
+          <div id="regOut" style="margin-top:18px"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <header><div><span class="eyebrow">Histórico</span><h2>Conversas registradas</h2></div>
+        <div class="ctrls"><button class="b2" id="btnExpReg">Exportar CSV</button></div></header>
+        <div class="body flush"><div class="tblwrap" id="histOut"></div></div>
+      </div>
+      <nav class="pager">
+        <a href="#" data-goto="mensagens"><span class="d">Página anterior</span><span class="t">Mensagens</span></a>
+        <a href="#" class="next" data-goto="base"><span class="d">Próxima página</span><span class="t">Base e conexão</span></a>
+      </nav>
+    </div>
+
+    <!-- ============ BASE ============ -->
+    <div class="view" id="v-base">
+      <div class="pagehead"><span class="eyebrow">Página 5 de 6</span><h2>Base e conexão</h2><p>Carregar a fila real da Estação 15, ligar a API e mapear planilha nova.</p></div>
+      <div class="panel">
+        <header><div><span class="eyebrow">Passo 1</span><h2>Carregar a fila da Estação 15</h2></div>
+        <div class="ctrls"><span class="kv" id="fonteAtual"></span></div></header>
+        <div class="body">
+          <p class="small">A Estação 15 já gravou <span class="mono">modelo_evasao_G4.joblib</span> (325 KB), a ficha técnica e a lista de prioridade. Rode o trecho de exportação no fim desta aba, cole o JSON aqui e a fila fictícia é substituída pela real. Alternativa: subir a API e apontar o endereço no Passo 2.</p>
+          <div class="grid2">
+            <div>
+              <label class="fld" for="filaJson">Colar JSON da fila</label>
+              <textarea id="filaJson" rows="9" spellcheck="false"></textarea>
+              <div class="btnrow">
+                <button class="b1" id="btnCarregar">Carregar fila</button>
+                <button class="b2" id="btnExemplo">Voltar ao exemplo</button>
+                <span class="ok-msg" id="filaOk" hidden>fila carregada</span>
+              </div>
+            </div>
+            <div>
+              <label class="fld">Formato esperado</label>
+              <pre class="code"><span class="c"># uma linha por aluna, já ordenada por risco decrescente</span>
+{
+  "gerado_em": "2026-09-05",
+  "campeao": "Random Forest",
+  "limiar": 0.491,
+  "universo": 60,
+  "evasoes": 39,
+  "fila": [
+    {
+      "aluna_id": "Aluna 1331",
+      "turma": "T12",
+      "apontada": "sim",
+      "idade": 34,
+      "escolaridade": 4,
+      "renda_ord": 0,
+      "pessoas_casa": 4,
+      "tem_computador": "Não",
+      "regiao": "NE"
+    }
+  ]
+}</pre>
+              <p class="hint"><b>Repare no que não está no contrato:</b> <span class="mono">risco</span>, <span class="mono">raca</span> e <span class="mono">lgbt</span>. As três entram no modelo e nenhuma atravessa para a tela da gestora. A ordem da lista já carrega toda a informação de risco que o notebook autoriza usar.</p>
+            </div>
+          </div>
+          <div style="margin-top:20px">
+            <label class="fld">Cole isto no fim da Estação 15 do notebook e o arquivo sai pronto</label>
+            <pre class="code"><span class="c"># ---- exporta a fila para a pagina Passo Firme ----</span>
+<span class="c"># roda depois da celula que cria `lista` e salva o .joblib</span>
+import json, datetime
+
+perfil_te = universo.loc[X_te.index]
+ordem = np.argsort(-prob_te)
+
+def limpo(v, tipo=float):
+    return None if pd.isna(v) else tipo(v)
+
+export = {
+    "gerado_em": str(datetime.date.today()),
+    "campeao": campeao,
+    "limiar": round(float(LIMIAR), 3),
+    "universo": int(len(universo)),
+    "evasoes": int(universo['evadiu'].sum()),
+    "fila": [],
+}
+for k in ordem:
+    r = perfil_te.iloc[int(k)]
+    export["fila"].append({
+        "aluna_id":       r["aluna_id"],
+        "turma":          r["turma_aba"],
+        "apontada":       "sim" if prob_te[k] &gt;= LIMIAR else "nao",
+        "idade":          limpo(r["idade"]),
+        "escolaridade":   limpo(r["escolaridade"], int),
+        "renda_ord":      limpo(r["renda_ord"], int),
+        "pessoas_casa":   limpo(r["pessoas_casa"]),
+        "tem_computador": limpo(r["tem_computador"], str),
+        "regiao":         limpo(r["regiao"], str),
+        <span class="c"># raca e lgbt NAO entram: Estacao 16 proibe como motivo de contato</span>
+    })
+
+with open('dados/fila_passo_firme.json', 'w', encoding='utf-8') as f:
+    json.dump(export, f, ensure_ascii=False, indent=2)
+
+print(f"{len(export['fila'])} alunas exportadas para dados/fila_passo_firme.json")
+print("Abra o arquivo, copie o conteudo e cole no campo ao lado.")</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <header><div><span class="eyebrow">Passo 2</span><h2>Ligar a API do modelo</h2></div></header>
+        <div class="body">
+          <div class="fldrow">
+            <div><label class="fld" for="apiUrl">Endereço da API</label><input type="text" id="apiUrl" style="width:100%" placeholder="https://sua-api.onrender.com" value=""></div>
+            <div style="flex:none"><button class="b2" id="btnTestar">Testar conexão</button></div>
+          </div>
+          <div id="apiOut" style="margin-top:14px"></div>
+          <p class="hint">O arquivo <span class="mono">api_passo_firme.py</span> entregue junto sobe o <span class="mono">.joblib</span> num FastAPI com <span class="mono">POST /prever</span> e <span class="mono">GET /fila</span>. Sem API configurada, a tela funciona inteira sobre o JSON colado acima: nenhuma função depende de rede.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <header><div><span class="eyebrow">Manutenção da base</span><h2>Leitor de planilha nova</h2></div></header>
+        <div class="body">
+          <p class="small dim" style="margin-top:0">Chegou turma nova com formulário diferente. Cole os cabeçalhos e a ferramenta propõe a qual dos 15 conceitos cada coluna pertence, acha coluna de status pelo vocabulário e separa dado pessoal. Foi assim que 163 colunas viraram 15 na Estação 3, e é o que evita repetir o trabalho na mão a cada semestre.</p>
+          <label class="fld" for="cabecalhos">Cabeçalhos, um por linha</label>
+          <textarea id="cabecalhos" rows="7" spellcheck="false"></textarea>
+          <div class="btnrow"><button class="b1" id="btnMapear">Propor mapeamento</button><button class="b2" id="btnLimparMapa">Limpar</button></div>
+          <div id="mapaOut" style="margin-top:18px"></div>
+        </div>
+      </div>
+      <nav class="pager">
+        <a href="#" data-goto="registro"><span class="d">Página anterior</span><span class="t">Registro da conversa</span></a>
+        <a href="#" class="next" data-goto="tecnica"><span class="d">Próxima página</span><span class="t">Ficha técnica</span></a>
+      </nav>
+    </div>
+
+    <!-- ============ FICHA TECNICA ============ -->
+    <div class="view" id="v-tecnica">
+      <div class="pagehead"><span class="eyebrow">Página 6 de 6</span><h2>Ficha técnica</h2><p>O que este modelo mede, o que ele não mede, e o que é proibido fazer com ele.</p></div>
+      <div class="panel">
+        <header><div><span class="eyebrow">Model card</span><h2>O que este modelo é, e o que ele não é</h2></div></header>
+        <div class="body">
+          <div class="grid2">
+            <div>
+              <h3 style="margin-bottom:10px">Ficha</h3>
+              <table class="dtable"><tbody>
+                <tr><td class="dim">projeto</td><td>Evasão Fly, Grupo Ada Lovelace (G4), Turma Fly diversiData</td></tr>
+                <tr><td class="dim">pergunta</td><td>prever risco de evasão a partir do formulário de inscrição</td></tr>
+                <tr><td class="dim">universo</td><td>60 alunas, 39 evasões, taxa 65,0%</td></tr>
+                <tr><td class="dim">treino / teste</td><td>45 / 15 alunas</td></tr>
+                <tr><td class="dim">campeão</td><td>Random Forest, escolhida por código pela maior AP média</td></tr>
+                <tr><td class="dim">hiperparâmetros</td><td>max_depth 3, min_samples_leaf 3, max_features sqrt, 300 árvores</td></tr>
+                <tr><td class="dim">métrica principal</td><td>average precision (AUC-PR)</td></tr>
+                <tr><td class="dim">AP validação cruzada</td><td>0,975 (piso teórico do acaso: 0,644)</td></tr>
+                <tr><td class="dim">AP do acaso, medida</td><td>média 0,753 · percentil 95 <b>0,861</b>, em 40 embaralhamentos com a busca em grade refeita inteira</td></tr>
+                <tr><td class="dim">limiar operacional</td><td>0,491, o maior que ainda entrega 80% de recall no treino</td></tr>
+                <tr><td class="dim">teste</td><td>AP 0,971 · recall 0,900 · precisão 0,818 · F1 0,857 · acurácia 0,800</td></tr>
+                <tr><td class="dim">calibração</td><td>Brier 0,125 contra 0,222 de quem repete a média</td></tr>
+                <tr><td class="dim">p-valor empírico</td><td class="said">0,0244 · o modelo tira nota melhor do que o acaso conseguiria. Existe sinal real, ainda que fraco</td></tr>
+              </tbody></table>
+            </div>
+            <div>
+              <h3 style="margin-bottom:10px">Variáveis</h3>
+              <table class="dtable"><tbody>
+                <tr><td class="dim">no modelo</td><td>idade, escolaridade, renda_ord, pessoas_casa, raca, tem_computador, regiao, lgbt</td></tr>
+                <tr><td class="dim">visíveis na tela</td><td class="said">idade, escolaridade, renda, pessoas_casa, tem_computador, regiao</td></tr>
+                <tr><td class="dim">nunca exibidas</td><td class="nope">raca, lgbt</td></tr>
+                <tr><td class="dim">fora do modelo</td><td>disponibilidade_h (45% no universo), tem_internet e deficiencia e genero (sem variação), mae_cuidadora (0% no universo), turma_aba (confundida com período)</td></tr>
+              </tbody></table>
+              <h3 style="margin:20px 0 10px">Uso</h3>
+              <ul class="gaps">
+                <li><span class="t" style="background:var(--teal-soft);border-color:var(--teal);color:var(--teal-deep)">permitido</span><span>ordenar a fila de prioridade para acolhimento</span></li>
+                <li><span class="t base">proibido</span><span>informar risco individual à aluna</span></li>
+                <li><span class="t base">proibido</span><span>decidir desligamento, bolsa ou seleção</span></li>
+                <li><span class="t base">proibido</span><span>conclusão sobre grupo com menos de 10 alunas</span></li>
+              </ul>
+            </div>
+          </div>
+          <h3 style="margin:24px 0 10px">Limitações medidas</h3>
+          <ul class="gaps">
+            <li><span class="t falta">L1 tamanho</span><span>60 alunas, 39 evasões. No teste de 15, uma aluna a mais ou a menos mexe o recall em 10 pontos.</span></li>
+            <li><span class="t falta">L2 alvo</span><span>100% do universo vem de uma fonte só, cuja definição de evasão inclui possível registro faltante. A taxa medida é um teto.</span></li>
+            <li><span class="t falta">L3 confundimento</span><span>55% do universo vem de um bloco só de turmas. Turma, período e fonte do desfecho estão grudados.</span></li>
+            <li><span class="t falta">L4 cobertura</span><span>21% das chaves dos backlogs casam com a base. Quem não casa pode ser sistematicamente diferente.</span></li>
+            <li><span class="t base">L5 variáveis</span><span>nenhuma variável de engajamento durante o curso. É a limitação decisiva, e é a que a aba Registro da conversa começa a resolver.</span></li>
+            <li><span class="t falta">L6 autodeclarado</span><span>as respostas são promessas feitas na inscrição, não medidas do que aconteceu depois.</span></li>
+            <li><span class="t falta">L7 escala</span><span>disponibilidade junta perguntas por dia e por semana, então carrega um pouco de "qual formulário a aluna respondeu".</span></li>
+          </ul>
+        </div>
+      </div>
+      <nav class="pager">
+        <a href="#" data-goto="base"><span class="d">Página anterior</span><span class="t">Base e conexão</span></a>
+        <span class="sp"></span>
+      </nav>
+    </div>
+
+  </main>
+
+  <!-- ============ CHAT ============ -->
+  <div class="backdrop" id="backdrop"></div>
+  <aside class="chat" id="chatDrawer" aria-hidden="true">
+    <header><div><span class="eyebrow">Copiloto interno</span><h3>Pergunte sobre a fila e o modelo</h3></div><button class="chatclose" id="btnChatClose">Fechar</button></header>
+    <div class="log" id="log"></div>
+    <div class="sugg" id="sugg"></div>
+    <div class="chatin">
+      <input type="text" id="chatIn" placeholder="ex.: quem eu procuro primeiro?" autocomplete="off">
+      <button class="b1" id="chatSend">Enviar</button>
+    </div>
+  </aside>
+</div>
+
+<footer class="app">
+  Cada Falso Negativo é uma mulher que a gente poderia ter acolhido antes. O modelo existe para chegar antes da evasão, nunca para rotular ninguém.
+  <br>Números citados nesta ferramenta vêm do notebook TCC_EvasaoFly_G4_V15, com a estação indicada em cada afirmação. Nada foi estimado.
+</footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s);};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+var LS={get:function(k,d){try{var v=localStorage.getItem("pf."+k);return v?JSON.parse(v):d;}catch(e){return d;}},
+        set:function(k,v){try{localStorage.setItem("pf."+k,JSON.stringify(v));}catch(e){}}};
+
+/* ================= dados ================= */
+var EXEMPLO={
+  gerado_em:"exemplo", campeao:"Random Forest", limiar:0.491, universo:60, evasoes:39, fonte:"exemplo",
+  fila:[
+    {aluna_id:"Aluna 0142",turma:"T12",apontada:"sim",idade:34,escolaridade:4,renda_ord:0,pessoas_casa:4,tem_computador:"Não",regiao:"NE"},
+    {aluna_id:"Aluna 0891",turma:"T12",apontada:"sim",idade:null,escolaridade:3,renda_ord:1,pessoas_casa:null,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 1204",turma:"T12",apontada:"sim",idade:41,escolaridade:5,renda_ord:0,pessoas_casa:6,tem_computador:"Sim",regiao:"N"},
+    {aluna_id:"Aluna 0377",turma:"T16",apontada:"sim",idade:22,escolaridade:null,renda_ord:1,pessoas_casa:2,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 1518",turma:"T12",apontada:"sim",idade:29,escolaridade:4,renda_ord:0,pessoas_casa:3,tem_computador:"Não",regiao:"NE"},
+    {aluna_id:"Aluna 0655",turma:"T12",apontada:"sim",idade:37,escolaridade:3,renda_ord:0,pessoas_casa:5,tem_computador:"Sim",regiao:"NE"},
+    {aluna_id:"Aluna 1077",turma:"T23",apontada:"sim",idade:26,escolaridade:4,renda_ord:1,pessoas_casa:2,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 0429",turma:"T12",apontada:"sim",idade:45,escolaridade:5,renda_ord:0,pessoas_casa:4,tem_computador:"Não",regiao:"CO"},
+    {aluna_id:"Aluna 1362",turma:"T16",apontada:"sim",idade:null,escolaridade:4,renda_ord:1,pessoas_casa:3,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 0208",turma:"T12",apontada:"sim",idade:31,escolaridade:3,renda_ord:0,pessoas_casa:7,tem_computador:"Sim",regiao:"N"},
+    {aluna_id:"Aluna 1445",turma:"T23",apontada:"sim",idade:24,escolaridade:4,renda_ord:1,pessoas_casa:2,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 0913",turma:"T12",apontada:"não",idade:38,escolaridade:5,renda_ord:1,pessoas_casa:3,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 1130",turma:"T16",apontada:"não",idade:28,escolaridade:4,renda_ord:1,pessoas_casa:2,tem_computador:"Sim",regiao:"S"},
+    {aluna_id:"Aluna 0561",turma:"T12",apontada:"não",idade:33,escolaridade:6,renda_ord:2,pessoas_casa:2,tem_computador:"Sim",regiao:"SE"},
+    {aluna_id:"Aluna 1289",turma:"T23",apontada:"não",idade:47,escolaridade:5,renda_ord:1,pessoas_casa:4,tem_computador:"Sim",regiao:"NE"}
+  ]
+};
+var DADOS=LS.get("fila",null)||JSON.parse(JSON.stringify(EXEMPLO));
+var CAP=LS.get("capacidade",5);
+var CONTATOS=LS.get("contatos",{});
+var REGISTROS=LS.get("registros",[]);
+var sel=0;
+
+var ESC_TXT={1:"fundamental incompleto",2:"fundamental completo ou médio incompleto",3:"médio completo ou técnico",4:"superior incompleto",5:"superior completo",6:"pós-graduação"};
+var RENDA_TXT={0:"menos de 1 salário mínimo por pessoa",1:"de 1 a 2 por pessoa",2:"de 2 a 5 por pessoa",3:"acima de 5 por pessoa"};
+var REG_TXT={N:"Norte",NE:"Nordeste",CO:"Centro-Oeste",SE:"Sudeste",S:"Sul"};
+
+var SELO=''
++'<b>Origem:</b> fila ordenada por Random Forest afinada, 8 variáveis do formulário de inscrição.<br>'
++'<b>Base:</b> 60 alunas com perfil e desfecho, 39 evasões. Teste com 15 alunas.<br>'
++'<b>Não usado como motivo:</b> raça, LGBT+, região.<br>'
++'<b>Teste de honestidade:</b> Estação 14, p empírico 0,0244. AP real 0,975 contra 0,861 no percentil 95 do acaso.<br>'
++'<b>Uso proibido:</b> informar risco individual à aluna, decidir desligamento, bolsa ou seleção.<br>'
++'<b>Protótipo acadêmico.</b> Rascunho para a gestora revisar. A ferramenta não envia nada.';
+
+/* ================= guarda de linguagem ================= */
+var REGRAS=[
+ {re:/\b\d{1,3}\s?%|\bprobabilidade\b|\bscore\b|\bpontua[çc][ãa]o de risco\b/gi,sev:"block",
+  motivo:"Número de risco na mensagem. A ficha técnica proíbe informar risco individual à aluna, e a calibração é instável com este n (Estação 13.3)."},
+ {re:/\bevas[ãa]o\b|\bevadir\b|\bevadiu\b|\bdesist[ea]\w*\b|\brisco\b/gi,sev:"block",
+  motivo:"Vocabulário do modelo. A mensagem informa à aluna que ela foi classificada, que é exatamente o uso proibido."},
+ {re:/\bmodelo\b|\balgoritmo\b|\bintelig[êe]ncia artificial\b|\bIA\b|\bprevis[ãa]o\b|\bsistema (?:previu|apontou)\b/g,sev:"block",
+  motivo:"Menciona a ferramenta para a aluna. Quem fala é a gestora, não o sistema."},
+ {re:/\bpreta\b|\bparda\b|\bnegra\b|\bind[íi]gena\b|\bLGBT\w*\b|\btrans\b|\bdefici[êe]ncia\b/gi,sev:"block",
+  motivo:"Atributo protegido no texto. A Estação 16 proíbe raça, orientação ou deficiência como motivo de contato, mesmo estando dentro do modelo."},
+ {re:/\bvi que\b|\bnotei que\b|\bsei que voc[êe]\b|\bpercebi que voc[êe]\b|\baqui aparece\b/gi,sev:"block",
+  motivo:"Revela que existe um registro sobre a aluna. Cria vigilância percebida, e o notebook não sustenta nenhuma afirmação sobre o caso dela."},
+ {re:/se o acesso a computador|se o acesso à internet|se estiver sem computador|caso n[ãa]o tenha computador|como voc[êe] n[ãa]o tem/gi,sev:"alert",
+  motivo:"Presume a barreira antes de perguntar. tem_computador tem V de Cramér 0,180, força fraca com p indisponível: o modelo não sabe que esse é o problema dela."},
+ {re:/vamos te dar|garantimos|a gente consegue conseguir|prometo|empr[ée]stimo de equipamento/gi,sev:"alert",
+  motivo:"Promessa de recurso. Só entra se a Fly confirmar que o recurso existe para esta turma."},
+ {re:/\bda sua regi[ãa]o\b|\bpor voc[êe] ser do (?:norte|nordeste|sul)\b|\bregi[ãa]o onde voc[êe] mora\b/gi,sev:"alert",
+  motivo:"Região como motivo. Turma × região dá V 0,552, praticamente igual à associação com a evasão: o efeito pode ser da turma (Estação 7.4)."}
+];
+
+function verificar(texto){
+  var hits=[];
+  REGRAS.forEach(function(r,ri){
+    var flags=r.re.flags.indexOf("g")>=0?r.re.flags:r.re.flags+"g";
+    var re=new RegExp(r.re.source,flags),m;
+    while((m=re.exec(texto))!==null){
+      if(!m[0].length){re.lastIndex++;continue;}
+      hits.push({start:m.index,end:m.index+m[0].length,sev:r.sev,ri:ri,txt:m[0]});
+    }
+  });
+  hits.sort(function(a,b){return a.start-b.start||b.end-a.end;});
+  var merged=[],last=-1;
+  hits.forEach(function(h){if(h.start>=last){merged.push(h);last=h.end;}});
+  return merged;
+}
+function marcar(texto,merged){
+  var out="",cur=0;
+  merged.forEach(function(h){
+    out+=esc(texto.slice(cur,h.start));
+    out+='<mark class="'+(h.sev==="block"?"hit":"warn")+'">'+esc(texto.slice(h.start,h.end))+'</mark>';
+    cur=h.end;
+  });
+  return out+esc(texto.slice(cur));
+}
+function relatorioGuarda(texto){
+  var merged=verificar(texto);
+  var usadas={};
+  merged.forEach(function(h){
+    if(!usadas[h.ri])usadas[h.ri]={r:REGRAS[h.ri],ex:[]};
+    if(usadas[h.ri].ex.length<3&&usadas[h.ri].ex.indexOf(h.txt)<0)usadas[h.ri].ex.push(h.txt);
+  });
+  var lista=Object.keys(usadas).map(function(k){return usadas[k];});
+  var bloq=lista.filter(function(x){return x.r.sev==="block";}).length;
+  var html='<h4 class="eyebrow" style="margin-bottom:8px">Guarda de linguagem</h4>';
+  html+='<div class="marked">'+marcar(texto,merged)+'</div>';
+  if(lista.length){
+    html+='<ul class="findings">'+lista.map(function(x){
+      return '<li><span class="sev '+x.r.sev+'">'+(x.r.sev==="block"?"bloqueia":"revisar")+'</span>'
+        +'<span><b class="mono">'+esc(x.ex.join(", "))+'</b><br>'+esc(x.r.motivo)+'</span></li>';
+    }).join("")+'</ul>';
+  }else{
+    html+='<ul class="findings"><li><span class="sev ok">passa</span><span>Nenhuma regra acionada. O texto não cita risco, não nomeia atributo protegido, não presume barreira e não promete recurso.</span></li></ul>';
+  }
+  html+='<div class="verdict '+(bloq?"block":"ok")+'">'
+    +(bloq?bloq+" regra(s) de bloqueio acionada(s). Corrija antes de enviar."
+         :"Liberado para revisão humana. Quem envia é a gestora, a ferramenta não envia nada.")+'</div>';
+  return {html:html,bloqueios:bloq};
+}
+
+/* ================= fila ================= */
+function faixa(i){ if(i<CAP)return"maior"; if(i<CAP*2)return"média"; return"menor"; }
+function faixaCls(f){ return f==="maior"?"maior":(f==="média"?"media":"menor"); }
+
+function trilhas(a){
+  var t=[],unk=[];
+  if(a.tem_computador==="Não") t.push({txt:"acesso digital: sem equipamento próprio",unk:false});
+  else unk.push("acesso digital");
+  unk.push("rede de cuidado"); unk.push("logística");
+  t.push({txt:unk.join(", ")+": sem dado",unk:true});
+  return t;
+}
+function lacunas(a){
+  var L=[];
+  if(a.idade==null)L.push(["falta","idade em branco na inscrição"]);
+  if(a.escolaridade==null)L.push(["falta","escolaridade em branco na inscrição"]);
+  if(a.pessoas_casa==null)L.push(["falta","quantas pessoas moram na casa, em branco"]);
+  L.push(["base","presença e entrega de atividade nas últimas duas semanas, não existe na base"]);
+  L.push(["base","horas reais de estudo por semana, hoje só existe a promessa feita na inscrição"]);
+  L.push(["perg","se exerce papel de mãe ou cuidadora, pergunta ausente no formulário desta turma"]);
+  L.push(["perg","disponibilidade real de horário, variável ficou fora do modelo com 45% de resposta"]);
+  return L;
+}
+function contatoDe(id){ return CONTATOS[id]||null; }
+
+function renderFila(){
+  var turma=$("#fTurma").value, busca=($("#fBusca").value||"").toLowerCase().trim();
+  var body=$("#filaBody"), html="";
+  DADOS.fila.forEach(function(a,i){
+    if(turma&&a.turma!==turma)return;
+    if(busca&&a.aluna_id.toLowerCase().indexOf(busca)<0)return;
+    var f=faixa(i), c=contatoDe(a.aluna_id);
+    html+='<tr data-i="'+i+'" class="'+(i===sel?"sel":"")+'" tabindex="0">'
+      +'<td class="pos">'+(i+1)+'</td>'
+      +'<td class="aid">'+esc(a.aluna_id)+'</td>'
+      +'<td class="pos">'+esc(a.turma)+'</td>'
+      +'<td><span class="chip '+faixaCls(f)+'">'+f+'</span></td>'
+      +'<td><div class="trilhas">'+trilhas(a).map(function(t){
+          return '<span class="chip tr'+(t.unk?" unk":"")+'">'+esc(t.txt)+'</span>';}).join("")+'</div></td>'
+      +'<td>'+(c?'<span class="stt done">'+esc(c.data)+'</span>':'<span class="stt">sem contato</span>')+'</td>'
+      +'</tr>';
+  });
+  body.innerHTML=html||'<tr><td colspan="6" style="padding:22px;text-align:center;color:var(--muted)">Nenhuma ficha com esse filtro.</td></tr>';
+  $$("#filaBody tr[data-i]").forEach(function(tr){
+    var go=function(){ sel=parseInt(tr.getAttribute("data-i"),10); renderFila(); renderFicha(); irPara("ficha"); };
+    tr.addEventListener("click",go);
+    tr.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){e.preventDefault();go();} });
+  });
+  atualizarTiles();
+}
+function atualizarTiles(){
+  var n=DADOS.fila.length, cont=Object.keys(CONTATOS).length;
+  var taxa=DADOS.universo?Math.round(1000*DADOS.evasoes/DADOS.universo)/10:0;
+  $("#tAcomp").textContent=n; $("#stAcomp").textContent=n;
+  $("#tTaxa").textContent=String(taxa).replace(".",",")+"%"; $("#stTaxa").textContent=String(taxa).replace(".",",")+"%";
+  $("#tMaior").textContent=Math.min(CAP,n); $("#stMaior").textContent=Math.min(CAP,n);
+  $("#tCont").textContent=cont; $("#stCont").textContent=cont;
+  $("#tAcompS").textContent=DADOS.fonte==="exemplo"?"fichas fictícias de exemplo":"fila carregada de "+esc(DADOS.gerado_em);
+  $("#fonteAtual").innerHTML=DADOS.fonte==="exemplo"
+    ?'fonte: <b style="color:var(--amber)">exemplo fictício</b>'
+    :'fonte: <b style="color:var(--teal-deep)">arquivo carregado, '+esc(DADOS.gerado_em)+'</b>';
+}
+function preencherSelects(){
+  var turmas=[];
+  DADOS.fila.forEach(function(a){ if(turmas.indexOf(a.turma)<0)turmas.push(a.turma); });
+  $("#fTurma").innerHTML='<option value="">todas as turmas</option>'+turmas.map(function(t){return '<option>'+esc(t)+'</option>';}).join("");
+  var opts=DADOS.fila.map(function(a,i){return '<option value="'+i+'">'+(i+1)+'. '+esc(a.aluna_id)+' · '+esc(a.turma)+'</option>';}).join("");
+  ["#fichaSel","#msgAluna","#regAluna"].forEach(function(s){ $(s).innerHTML=opts; $(s).value=String(sel); });
+}
+
+/* ================= ficha ================= */
+var PERGUNTAS=[
+ ["disponibilidade real","Como está sendo encaixar as aulas na sua semana? Me conta como foi a última semana de verdade, não a semana ideal."],
+ ["equipamento","Quando você senta para estudar, você usa o quê? E fica onde?"],
+ ["presença e entrega","Teve alguma aula ou atividade que você não conseguiu fazer? O que aconteceu naquele dia?"],
+ ["rede de apoio","Quem aí em casa sabe que você está fazendo o curso? Alguém te dá cobertura para estudar?"],
+ ["logística","Se desse para mudar uma coisa no curso para caber melhor na sua vida, qual seria?"],
+ ["aberta","Tem alguma coisa que a Fly poderia fazer que a gente ainda não perguntou?"]
+];
+function v(x,fmt){ return x==null?'<span class="v none">sem resposta</span>':'<span class="v">'+esc(fmt?fmt(x):x)+'</span>'; }
+
+function renderFicha(){
+  var a=DADOS.fila[sel]; if(!a){$("#fichaBody").innerHTML="";return;}
+  $("#fichaSel").value=String(sel);
+  var f=faixa(sel), c=contatoDe(a.aluna_id);
+  $("#fichaTitulo").innerHTML=esc(a.aluna_id)+' <span class="chip '+faixaCls(f)+'" style="vertical-align:middle;margin-left:6px">atenção '+f+'</span>';
+  var regs=REGISTROS.filter(function(r){return r.aluna_id===a.aluna_id;});
+  var html=''
+   +'<div class="kv" style="margin-bottom:14px">posição '+(sel+1)+' de '+DADOS.fila.length+' · turma '+esc(a.turma)+' · '
+   +(c?'último contato em '+esc(c.data):'sem contato registrado')+'</div>'
+   +'<div class="fichagrid">'
+   +'<div><span class="k">idade</span>'+v(a.idade,function(x){return x+" anos";})+'</div>'
+   +'<div><span class="k">escolaridade</span>'+v(a.escolaridade,function(x){return ESC_TXT[x]||x;})+'</div>'
+   +'<div><span class="k">renda por pessoa</span>'+v(a.renda_ord,function(x){return RENDA_TXT[x]||x;})+'</div>'
+   +'<div><span class="k">pessoas na casa</span>'+v(a.pessoas_casa)+'</div>'
+   +'<div><span class="k">computador próprio</span>'+v(a.tem_computador)+'</div>'
+   +'<div><span class="k">região (contexto)</span>'+v(a.regiao,function(x){return REG_TXT[x]||x;})+'</div>'
+   +'</div>'
+   +'<div class="locked"><b>Dois campos do modelo não aparecem aqui, por decisão de projeto:</b> raça e LGBT+. '
+   +'Eles entram no modelo, e a permutação da Estação 13.2 mostra que a campeã usa LGBT+ entre as quatro variáveis de maior peso. '
+   +'Exatamente por isso eles ficam fora da tela: a Estação 16 proíbe raça, orientação e deficiência como motivo de contato. '
+   +'Região aparece como contexto operacional, nunca como motivo, porque turma × região dá V 0,552 e o efeito pode ser da turma.</div>'
+
+   +'<h3 style="margin:24px 0 10px">O que a gente não sabe sobre ela</h3>'
+   +'<ul class="gaps">'+lacunas(a).map(function(l){
+       var rot=l[0]==="falta"?"em branco":(l[0]==="base"?"não existe na base":"pergunta ausente");
+       return '<li><span class="t '+l[0]+'">'+rot+'</span><span>'+esc(l[1])+'</span></li>';}).join("")+'</ul>'
+
+   +'<h3 style="margin:24px 0 10px">Roteiro de escuta</h3>'
+   +'<p class="small dim" style="margin-top:-4px">O roteiro é igual para toda a fila, e isso é o achado, não uma limitação: o modelo não fornece motivo por caso. Cada pergunta levanta uma variável que a base não tem.</p>'
+   +'<ul class="qlist">'+PERGUNTAS.map(function(q){
+       return '<li><span class="t">'+esc(q[0])+'</span><span>'+esc(q[1])+'</span></li>';}).join("")+'</ul>'
+
+   +'<div class="btnrow"><button class="b1" id="fichaMsg">Gerar mensagem de abertura</button>'
+   +'<button class="b3" id="fichaReg">Registrar conversa</button>'
+   +'<button class="b2" id="fichaMarcar">'+(c?"Desmarcar contato":"Marcar como contatada")+'</button></div>';
+
+  if(regs.length){
+    html+='<h3 style="margin:26px 0 10px">Conversas registradas</h3><div class="tblwrap">'+tabelaRegistros(regs)+'</div>';
+  }
+  html+='<div class="selo">'+SELO+'</div>';
+  $("#fichaBody").innerHTML=html;
+
+  $("#fichaMsg").addEventListener("click",function(){ $("#msgAluna").value=String(sel); $("#msgTrilha").value="abertura"; irPara("mensagens"); gerarMsg(); });
+  $("#fichaReg").addEventListener("click",function(){ $("#regAluna").value=String(sel); irPara("registro"); });
+  $("#fichaMarcar").addEventListener("click",function(){
+    if(CONTATOS[a.aluna_id]) delete CONTATOS[a.aluna_id];
+    else CONTATOS[a.aluna_id]={data:hoje()};
+    LS.set("contatos",CONTATOS); renderFicha(); renderFila();
+  });
+}
+function hoje(){ var d=new Date(); return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear(); }
+
+/* ================= mensagens ================= */
+var TEXTOS={
+ abertura:{
+  whats:"Oi, [nome], aqui é a [gestora] da Fly.\n\nEstou passando pelas turmas para conversar com quem entrou neste ciclo e entender como está sendo a rotina de estudo de cada uma.\n\nVocê teria uns 15 minutos nesta semana? Pode ser por áudio, se for mais fácil. Me diz dois horários que funcionam para você que eu me organizo.",
+  email:"Assunto: 15 minutos de conversa sobre o curso\n\nOi, [nome], tudo bem?\n\nAqui é a [gestora] da Fly. Estou conversando com as alunas da turma [turma] para entender como está sendo encaixar o curso na rotina de cada uma, e o que a gente pode ajustar do nosso lado.\n\nVocê teria uns 15 minutos nesta semana? Me responda com dois horários que funcionam para você, ou me chame no WhatsApp se preferir.\n\nAbraço,\n[gestora]"},
+ digital:{
+  whats:"Oi, [nome], aqui é a [gestora] da Fly.\n\nQueria te contar uma coisa que a gente oferece para todas as alunas da turma [turma] e nem sempre fica claro: temos uma lista de bibliotecas e espaços públicos com computador e wi-fi por região, e em algumas turmas conseguimos organizar empréstimo de equipamento.\n\nSe em algum momento isso te ajudar, me fala que eu te mando a lista da sua cidade. E me conta uma coisa: quando você senta para estudar, você usa o quê?",
+  email:"Assunto: lista de espaços com computador e wi-fi\n\nOi, [nome], tudo bem?\n\nAqui é a [gestora] da Fly. Estou mandando para todas as alunas da turma [turma] uma coisa que nem sempre fica clara: a gente mantém uma lista de bibliotecas e espaços públicos com computador e internet por região, e em algumas turmas conseguimos organizar empréstimo de equipamento.\n\nSe isso te ajudar em algum momento, me responde que eu te mando a lista da sua cidade.\n\nE se puder me contar como você costuma acompanhar as aulas, que aparelho usa e onde, ajuda muito a gente a organizar o apoio.\n\nAbraço,\n[gestora]"},
+ cuidado:{
+  whats:"Oi, [nome], aqui é a [gestora] da Fly.\n\nEstou mandando para as alunas da turma [turma] uma lista de serviços gratuitos que a gente reuniu: CRAS, CAPS e atendimento psicológico gratuito por região. É uma coisa que a gente oferece para todo mundo, não é sobre você especificamente.\n\nE queria te perguntar: quem aí em casa sabe que você está fazendo o curso? Alguém te dá cobertura para estudar? A gente consegue ajustar bastante coisa quando entende como é a sua semana de verdade.",
+  email:"Assunto: rede de apoio e serviços gratuitos por região\n\nOi, [nome], tudo bem?\n\nAqui é a [gestora] da Fly. Estou enviando para as alunas da turma [turma] uma lista que a gente reuniu de serviços gratuitos por região: CRAS, CAPS e atendimento psicológico sem custo. É material que oferecemos para toda a turma.\n\nAproveito para perguntar: como está sendo conciliar o curso com a sua rotina? Quem aí em casa sabe que você está estudando, e você tem alguém que te dê cobertura nesses horários?\n\nA gente consegue ajustar bastante coisa quando entende como é a semana de verdade de cada uma.\n\nAbraço,\n[gestora]"},
+ logistica:{
+  whats:"Oi, [nome], aqui é a [gestora] da Fly.\n\nA turma [turma] tem algumas opções que nem todo mundo sabe que existem: mentoria individual, aula de reforço em outro horário e, em alguns casos, remanejamento para turma com horário diferente.\n\nSe algum desses formatos encaixar melhor na sua semana, me fala qual e eu organizo. E me conta: se desse para mudar uma coisa no curso para caber melhor na sua vida, qual seria?",
+  email:"Assunto: horários alternativos, mentoria e reforço\n\nOi, [nome], tudo bem?\n\nAqui é a [gestora] da Fly. Queria lembrar as alunas da turma [turma] de algumas opções que existem e nem sempre ficam visíveis: mentoria individual, aula de reforço em outro horário e, em alguns casos, remanejamento para turma com horário diferente.\n\nSe algum desses formatos encaixar melhor na sua semana, me responde qual que eu organizo.\n\nE se puder me contar: se desse para mudar uma coisa no curso para caber melhor na sua vida, o que seria?\n\nAbraço,\n[gestora]"},
+ retorno:{
+  whats:"Oi, [nome], aqui é a [gestora] da Fly.\n\nA gente combinou de se falar de novo, e aqui estou. Como foram estas últimas semanas?\n\nSe alguma coisa mudou na sua rotina, me conta que a gente reorganiza o que der.",
+  email:"Assunto: retomando nossa conversa\n\nOi, [nome], tudo bem?\n\nAqui é a [gestora] da Fly. A gente tinha combinado de se falar de novo, então estou passando para saber como foram estas últimas semanas.\n\nSe alguma coisa mudou na sua rotina de estudo, me conta que a gente reorganiza o que der do nosso lado.\n\nAbraço,\n[gestora]"}
+};
+
+function gerarMsg(){
+  var i=parseInt($("#msgAluna").value,10), a=DADOS.fila[i];
+  var trilha=$("#msgTrilha").value, canal=$("#msgCanal").value;
+  var txt=TEXTOS[trilha][canal].replace(/\[turma\]/g,a.turma);
+  var g=relatorioGuarda(txt);
+  $("#msgOut").innerHTML=''
+   +'<h4 class="eyebrow" style="margin-bottom:8px">Rascunho para '+esc(a.aluna_id)+', editável</h4>'
+   +'<div class="draft" id="draftBox" contenteditable="true" spellcheck="true">'+esc(txt)+'</div>'
+   +'<div class="btnrow"><button class="b1" id="btnReverifica">Verificar de novo</button>'
+   +'<button class="b3" id="btnCopiar">Copiar</button>'
+   +'<button class="b2" id="btnMarcar2">Marcar como contatada</button>'
+   +'<span class="ok-msg" id="msgOk" hidden>copiado</span></div>'
+   +'<div id="guardaOut" style="margin-top:18px">'+g.html+'</div>'
+   +'<div class="selo">'+SELO+'</div>';
+  $("#btnReverifica").addEventListener("click",function(){
+    $("#guardaOut").innerHTML=relatorioGuarda($("#draftBox").innerText).html;
+  });
+  $("#btnCopiar").addEventListener("click",function(){
+    var t=$("#draftBox").innerText;
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t);}
+    else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);}
+    var o=$("#msgOk");o.hidden=false;setTimeout(function(){o.hidden=true;},2000);
+  });
+  $("#btnMarcar2").addEventListener("click",function(){
+    CONTATOS[a.aluna_id]={data:hoje()};LS.set("contatos",CONTATOS);renderFila();
+    var o=$("#msgOk");o.textContent="contato registrado";o.hidden=false;setTimeout(function(){o.hidden=true;o.textContent="copiado";},2000);
+  });
+}
+
+/* ================= escriba ================= */
+var NOTA_EX="conversei com ela hoje por audio. disse que na ultima semana so conseguiu abrir a plataforma duas vezes, sempre depois das 22h. faz tudo pelo celular, o notebook e do irmao e ele leva pro trabalho. nao entregou a atividade da semana 3. falou que a mae ajuda com a filha nas tercas e quintas, nos outros dias fica sozinha. pediu pra gente chamar de novo daqui 15 dias.";
+
+var CAMPOS=[
+ {c:"acessos_plataforma_semana",f:function(t){var m=t.match(/(uma|duas|tr[eê]s|quatro|cinco|nenhuma|\d+)\s+vez(es)?/i);return m?m[1]+" vez(es)":null;}},
+ {c:"horario_de_estudo",f:function(t){var m=t.match(/(depois das \d{1,2}h?|antes das \d{1,2}h?|de madrugada|de manh[aã]|[àa] noite|de tarde|[àa] tarde)/i);return m?m[0]:null;}},
+ {c:"equipamento_proprio",f:function(t){
+   var so=/(s[oó]|apenas|tudo)\s*(pelo|no|pelo meu)?\s*(celular|smartphone|tablet)/i.test(t)||/faz tudo pelo celular/i.test(t);
+   var comp=/(do irm[aã]o|da m[aã]e|do marido|emprestad|compartilh|leva pro trabalho|leva para o trabalho)/i.test(t);
+   if(so&&comp)return"não, usa celular; notebook compartilhado";
+   if(so)return"não, usa celular";
+   if(/(tenho|possuo|meu)\s+(notebook|computador)/i.test(t))return"sim";
+   return comp?"compartilhado":null;}},
+ {c:"entregou_atividade",f:function(t){
+   var neg=/n[aã]o entregou|nao entregou|n[aã]o consegui entregar|deixou de entregar|nao consegui fazer/i.test(t);
+   var sem=t.match(/semana\s*(\d+)/i);
+   if(neg)return"não"+(sem?", semana "+sem[1]:"");
+   if(/entregou|entreguei/i.test(t))return"sim"+(sem?", semana "+sem[1]:"");
+   return null;}},
+ {c:"rede_de_apoio",f:function(t){
+   var parcial=/(ter[cç]as|quintas|segundas|quartas|sextas|fins? de semana|alguns dias|[àa]s vezes)/i.test(t);
+   var sozinha=/(fica sozinha|sem ajuda|ningu[eé]m ajuda|sozinha)/i.test(t);
+   var ajuda=/(ajuda|apoia|cuida|d[aá] cobertura)/i.test(t);
+   if(ajuda&&(parcial||sozinha))return"parcial, só em alguns dias";
+   if(sozinha)return"sem apoio relatado";
+   if(ajuda)return"tem apoio";
+   return null;}},
+ {c:"horas_reais_semana",f:function(t){var m=t.match(/(\d+)\s*horas?\s*(por|na)\s*semana/i);return m?m[1]+" h/semana":null;}},
+ {c:"quer_novo_contato",f:function(t){
+   var m=t.match(/daqui\s+a?\s*(\d+)\s*(dias?|semanas?)/i);
+   if(m)return"sim, em "+m[1]+" "+m[2];
+   return /(chamar de novo|falar de novo|voltar a falar|me procura)/i.test(t)?"sim":null;}},
+ {c:"barreira_relatada",f:function(t){
+   var b=[];
+   if(/(celular|sem computador|notebook.*(irm|m[aã]e|marido|trabalho))/i.test(t))b.push("equipamento");
+   if(/(filha|filho|cuidar|creche|m[aã]e ajuda)/i.test(t))b.push("cuidado");
+   if(/(depois das \d|madrugada|trabalho|hor[aá]rio|turno)/i.test(t))b.push("horário");
+   if(/(internet|wi-?fi|dados m[oó]veis|sinal)/i.test(t))b.push("conexão");
+   return b.length?b.join(", "):null;}},
+ {c:"motivo_de_saida",f:function(t){return /(vou sair|desisti|trancar|parar o curso)/i.test(t)?"mencionou intenção de sair, priorizar":null;}}
+];
+
+function extrair(){
+  var t=$("#regTexto").value||"";
+  var linhas=CAMPOS.map(function(r){var v=null;try{v=r.f(t);}catch(e){}return {c:r.c,v:v};});
+  var ditos=linhas.filter(function(l){return l.v;}).length;
+  var novos=linhas.filter(function(l){return l.v&&["acessos_plataforma_semana","entregou_atividade","horas_reais_semana","horario_de_estudo"].indexOf(l.c)>=0;}).length;
+  $("#regOut").innerHTML=''
+   +'<h4 class="eyebrow" style="margin-bottom:8px">Linha estruturada para a planilha de acompanhamento</h4>'
+   +'<div class="tblwrap"><table class="dtable"><thead><tr><th>campo</th><th>valor</th><th>procedência</th></tr></thead><tbody>'
+   +linhas.map(function(l){
+      return '<tr><td>'+esc(l.c)+'</td><td class="'+(l.v?"said":"nope")+'">'+esc(l.v||"não mencionado")+'</td>'
+        +'<td class="'+(l.v?"said":"nope")+'">'+(l.v?"dito pela aluna":"perguntar no próximo contato")+'</td></tr>';
+    }).join("")+'</tbody></table></div>'
+   +'<div class="verdict '+(ditos>=4?"ok":"block")+'">'+ditos+' de '+linhas.length+' campos preenchidos por fala da aluna. '
+   +'Nenhum campo foi deduzido. '+(novos?novos+' deles são de engajamento, que é a variável que a limitação L5 aponta como ausente na base.':'')
+   +'</div>';
+  return linhas;
+}
+function tabelaRegistros(regs){
+  if(!regs.length)return '<p class="small dim" style="padding:16px">Nenhuma conversa registrada ainda.</p>';
+  var cols=["data","aluna_id"].concat(CAMPOS.map(function(c){return c.c;}));
+  return '<table class="dtable" style="min-width:900px"><thead><tr>'
+   +cols.map(function(c){return '<th>'+esc(c)+'</th>';}).join("")+'</tr></thead><tbody>'
+   +regs.map(function(r){return '<tr>'+cols.map(function(c){
+       var val=r[c];
+       return '<td class="'+(val?"said":"nope")+'">'+esc(val||"-")+'</td>';}).join("")+'</tr>';}).join("")
+   +'</tbody></table>';
+}
+function renderHist(){ $("#histOut").innerHTML=tabelaRegistros(REGISTROS); }
+
+/* ================= leitor de planilha ================= */
+var CABEC_EX=["Qual é o seu nível de escolaridade?","Você possui acesso a Internet?","Qual dispositivo você pretende usar para acompanhar o curso?","Quantas pessoas moram na sua casa? (somente números)","Você possui filhos ou exerce papel de mãe/cuidadora?","Status Aluna no Curso","Assinou desligamento","Quantas horas por semana você conseguiu estudar de fato?","Qual o seu WhatsApp?","Em relação à raça, como você se identifica?"].join("\n");
+var CONCEITOS=[
+ {c:"escolaridade_txt",kw:["escolaridade","grau de escolaridade","nivel de escolaridade"]},
+ {c:"internet_txt",kw:["internet","wi-fi","wifi","acesso a internet"]},
+ {c:"computador_txt",kw:["computador","dispositivo","notebook"]},
+ {c:"pessoas_casa_txt",kw:["pessoas moram","quantas pessoas"]},
+ {c:"mae_cuidadora",kw:["filhos","mae/cuidadora","cuidadora"]},
+ {c:"raca",kw:["raca","etnia","como voce se identifica"]},
+ {c:"genero",kw:["genero"]},
+ {c:"lgbt",kw:["lgbtqia","lgbtqiapn","comunidade lgbt"]},
+ {c:"idade_txt",kw:["idade"]},
+ {c:"nascimento",kw:["data de nascimento","nascimento"]},
+ {c:"renda_faixa",kw:["renda familiar","renda"]},
+ {c:"estado_txt",kw:["estado que mora","estado/regiao","estado"]},
+ {c:"disponibilidade_txt",kw:["disponibilidade","tempo para estudar","dedicar ao curso"]},
+ {c:"deficiencia",kw:["deficiencia"]},
+ {c:"status_aprovacao",kw:["status de aprovacao","status aluna","status"]}
+];
+var PESSOAL=["whatsapp","telefone","celular","e-mail","email","cpf","rg","endereco","cep","bairro","rua","nome completo","linkedin","conte","relato","justifique","descreva"];
+var DESLIGA=["desligamento","desligada","assinou"];
+var ENGAJA=["conseguiu estudar","horas por semana","presenca","entregou","frequencia","acessou a plataforma","de fato"];
+function nrm(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();}
+
+function mapear(){
+  var linhas=($("#cabecalhos").value||"").split("\n").map(function(l){return l.trim();}).filter(Boolean);
+  if(!linhas.length){$("#mapaOut").innerHTML="";return;}
+  var res=linhas.map(function(h){
+    var n=nrm(h),i,k;
+    for(i=0;i<PESSOAL.length;i++) if(n.indexOf(nrm(PESSOAL[i]))>=0) return {h:h,d:"não entra",cf:"alta",nota:"risco de dado pessoal, Estação 2.5"};
+    for(i=0;i<DESLIGA.length;i++) if(n.indexOf(nrm(DESLIGA[i]))>=0) return {h:h,d:"sinal de desfecho",cf:"alta",nota:"alimenta o detector de status, Estação 6.1"};
+    var melhor=null,sc=0;
+    for(i=0;i<CONCEITOS.length;i++) for(k=0;k<CONCEITOS[i].kw.length;k++){
+      var kw=nrm(CONCEITOS[i].kw[k]);
+      if(n.indexOf(kw)>=0&&kw.length>sc){melhor=CONCEITOS[i].c;sc=kw.length;}
+    }
+    if(melhor==="status_aprovacao") return {h:h,d:"alvo: status_aprovacao",cf:sc>=12?"alta":"média",nota:"coluna de desfecho, entra na Estação 6"};
+    if(melhor) return {h:h,d:melhor,cf:sc>=12?"alta":"média",nota:"variante conhecida, entra no MAPA da Estação 3"};
+    for(i=0;i<ENGAJA.length;i++) if(n.indexOf(nrm(ENGAJA[i]))>=0) return {h:h,d:"conceito novo: engajamento",cf:"proposta",nota:"não existe no MAPA e é justamente a lacuna L5, vale criar"};
+    return {h:h,d:"não reconhecido",cf:"baixa",nota:"vira pendência para revisão humana, não entra sozinha"};
+  });
+  var novos=res.filter(function(r){return r.cf==="proposta";}).length;
+  var pend=res.filter(function(r){return r.cf==="baixa";}).length;
+  $("#mapaOut").innerHTML='<div class="tblwrap"><table class="dtable" style="min-width:700px"><thead><tr>'
+   +'<th>cabeçalho</th><th>destino proposto</th><th>confiança</th><th>por quê</th></tr></thead><tbody>'
+   +res.map(function(r){
+      var cls=(r.d==="não entra"||r.d==="não reconhecido")?"nope":"said";
+      return '<tr><td>'+esc(r.h)+'</td><td class="'+cls+'">'+esc(r.d)+'</td><td>'+esc(r.cf)+'</td><td class="dim">'+esc(r.nota)+'</td></tr>';
+    }).join("")+'</tbody></table></div>'
+   +'<div class="verdict ok">Nada foi gravado. '+(novos?novos+' conceito(s) novo(s) proposto(s) e ':'')+pend+' pendência(s) para revisão humana. A confirmação de uma pessoa é o que vira linha no MAPA da Estação 3.</div>';
+}
+
+/* ================= chat ================= */
+var QA=[
+ {k:["risco alto","dizer o risco","falar o risco","risco para a aluna","contar o risco","porcentagem"],
+  a:"Não pode. A ficha técnica lista \"informar risco individual à aluna\" como uso proibido, e a Estação 13.3 mostra por quê: a curva de calibração tem poucas alunas por faixa e é instável. O modelo ordena a fila melhor que o acaso (Brier 0,125 contra 0,222), mas o número que ele devolve não é confiável como probabilidade dita a uma pessoa.",
+  s:"Estações 13.3 e 15",refuse:true},
+ {k:["desligamento","bolsa","cortar","desligar","selecao","seleção"],
+  a:"Não. A ficha técnica lista \"decidir desligamento, bolsa ou seleção\" como uso proibido. Um modelo que ordena risco, se usado para cortar, vira máquina de exclusão justamente com as alunas que ele mais aponta.",
+  s:"Estação 15",refuse:true},
+ {k:["computador","equipamento","acesso digital causa","falta de computador"],
+  a:"Não dá para afirmar com este n. tem_computador tem V de Cramér 0,180, na faixa \"fraca\", e o p-valor está indisponível porque alguma casela esperava menos de 5 alunas. No universo, só 5 alunas responderam \"Não\". A hipótese H1 continua plausível pela literatura, mas não foi confirmada por estes dados.",
+  s:"Estação 7.3"},
+ {k:["mae","mãe","cuidadora","filhos","cuidado aumenta"],
+  a:"A hipótese não pôde ser testada. mae_cuidadora tem 12% de resposta na base inteira e 0% dentro do universo de 60 alunas, porque a pergunta só existiu em parte dos formulários. É a variável que a literatura mais aponta e a menos preenchida da base. Virou o pedido nº 4 à Fly.",
+  s:"Estações 4, 9 e 16"},
+ {k:["regiao","região","norte","nordeste","onde mora"],
+  a:"Cuidado com essa leitura. Região aparece com V de Cramér 0,554 com a evasão, mas turma × região dá 0,552, praticamente o mesmo. Turma, período e fonte do desfecho estão grudados (limitação L3), então o que parece efeito de região pode ser efeito de turma. Não interpretar como causa e não usar como motivo de contato.",
+  s:"Estações 7.3 e 7.4"},
+ {k:["modelo e bom","modelo é bom","confiavel","confiável","funciona","acuracia","acurácia","metricas","métricas"],
+  a:"Ele ordena, e agora isso está testado. A Estação 14 embaralhou o alvo 40 vezes refazendo a busca em grade inteira: o acaso tira AP 0,753 em média e 0,861 no percentil 95, enquanto o modelo real tira 0,9746. p empírico 0,0244, então existe sinal real, ainda que fraco.\n\nDuas ressalvas para não exagerar na banca. Primeira: o ganho verdadeiro sobre o acaso é de cerca de 0,12 acima do percentil 95, não os 0,33 sobre o piso teórico de 0,644. Segunda: o teste final tem 15 alunas, das quais 10 evadiram, e uma aluna a mais ou a menos mexe o recall em 10 pontos. A frase certa é: o modelo ordena melhor que o acaso, e a ordem é o único uso autorizado.",
+  s:"Estações 13 e 14"},
+ {k:["limiar","quantas alunas","capacidade","quantas conversas"],
+  a:"Isso é decisão da Fly, não do algoritmo. O limiar 0,491 foi escolhido como o maior que ainda entrega 80% de recall no treino. Com ele, no teste de 15 alunas o modelo apontou 11, das quais 9 tinham evadido, 2 não iam sair e 1 evasão passou batida. O controle de capacidade no Painel é onde você move esse corte.",
+  s:"Estação 12"},
+ {k:["o que pedir","muda tudo","coletar","dado que falta","engajamento"],
+  a:"Coletar presença e entrega de atividade por semana e por aluna. A limitação L5 diz que não existe nenhuma variável de engajamento nesta base: as 8 do modelo são declaradas na inscrição, antes do curso começar, e evasão acontece durante. Em segundo lugar, usar a mesma chave aluna_id nos dois arquivos: hoje só 21% cruzam, e corrigir isso multiplica o universo sem coletar nada novo.",
+  s:"Estações 8 e 16"},
+ {k:["por que a aluna","por que ela","motivo dela","fatores dela","o que pesa"],
+  a:"Essa pergunta não tem resposta neste modelo, e é importante que não tenha. A campeã é uma Random Forest, que não é linear e não tem coeficiente para ler direção. A permutação da Estação 13.2 mostra que ela usa escolaridade, idade, região e LGBT+, e as duas últimas não podem virar assunto de conversa: região está confundida com turma e LGBT+ é atributo protegido. Por isso a ferramenta entrega roteiro de escuta em vez de diagnóstico.",
+  s:"Estações 13.2 e 16"}
+];
+
+function log(who,html,cls){
+  var d=document.createElement("div");
+  d.className="msg "+who+(cls?" "+cls:"");
+  d.innerHTML=html;
+  $("#log").appendChild(d);
+  $("#log").scrollTop=$("#log").scrollHeight;
+}
+function nrmq(s){return nrm(s).replace(/[?!.,]/g,"");}
+
+function responder(q){
+  var n=nrmq(q);
+  var i,j;
+
+  /* gerar mensagem para aluna X focada em Y */
+  if(/(gere|gerar|escrev|monta|faz)/.test(n)&&/(mensagem|rascunho|texto)/.test(n)){
+    var alvo=null;
+    for(i=0;i<DADOS.fila.length;i++){ if(n.indexOf(nrm(DADOS.fila[i].aluna_id))>=0){alvo=i;break;} }
+    var m=q.match(/aluna\s*(\d+)/i);
+    if(alvo===null&&m){ for(i=0;i<DADOS.fila.length;i++){ if(DADOS.fila[i].aluna_id.indexOf(m[1])>=0){alvo=i;break;} } }
+    var tr="abertura";
+    if(/digital|computador|internet|equipamento/.test(n))tr="digital";
+    else if(/cuidado|apoio|psicol|familia|família/.test(n))tr="cuidado";
+    else if(/logistic|logístic|horario|horário|reforco|reforço|mentoria/.test(n))tr="logistica";
+    else if(/retom|de novo|retorno/.test(n))tr="retorno";
+    if(alvo===null)alvo=sel;
+    $("#msgAluna").value=String(alvo); $("#msgTrilha").value=tr;
+    irPara("mensagens"); gerarMsg();
+    return {a:"Abri o gerador com "+DADOS.fila[alvo].aluna_id+" na trilha "+tr+". O rascunho já passou pela guarda de linguagem e está editável na aba Mensagens. Lembre que o texto oferece o recurso para toda a turma, e não afirma que ela tem aquele problema: o modelo não sabe qual é a barreira dela.",s:"gerador de rascunhos"};
+  }
+
+  /* listar por trilha */
+  if(/(quais|quem|lista|listar)/.test(n)&&/(cuidado|digital|computador|logistic|logístic|horario|horário|apoio)/.test(n)){
+    var tipo=/digital|computador|internet|equipamento/.test(n)?"digital":(/logistic|logístic|horario|horário/.test(n)?"logistica":"cuidado");
+    if(tipo==="digital"){
+      var lst=DADOS.fila.filter(function(a,ix){return a.tem_computador==="Não"&&ix<CAP*2;});
+      if(!lst.length)return {a:"Nenhuma das alunas dentro do corte atual declarou não ter computador. Vale lembrar que essa resposta vem da inscrição e pode ter mudado: a pergunta sobre equipamento está no roteiro de escuta justamente por isso.",s:"fila carregada"};
+      return {a:"Dentro do corte atual, declararam não ter computador na inscrição: "+lst.map(function(a){return a.aluna_id;}).join(", ")+". Isso é encaminhamento possível, não motivo: com V de Cramér 0,180 e p indisponível, o modelo não sustenta que a falta de equipamento seja o que leva à saída.",s:"Estação 7.3 e fila carregada"};
+    }
+    if(tipo==="cuidado"){
+      return {a:"Não consigo responder isso com os dados que existem. mae_cuidadora tem 0% de resposta dentro do universo de 60 alunas: a pergunta não estava no formulário dessas turmas. Toda a fila entra como \"sem dado\" nessa trilha, e a única forma de saber hoje é perguntar na conversa. A pergunta já está no roteiro de escuta de cada ficha.",s:"Estações 4 e 9"};
+    }
+    return {a:"Também não dá. disponibilidade_h ficou fora do modelo com 45% de resposta dentro do universo, e a Estação 8 anota na limitação L7 que ela mistura pergunta por dia com pergunta por semana. A trilha de logística existe como oferta para a turma inteira, não como seleção de quem precisa.",s:"Estações 8 e 9"};
+  }
+
+  /* prioridade da semana */
+  if(/(quem|por quem)/.test(n)&&/(primeiro|comec|começ|priorid|semana)/.test(n)){
+    var top=DADOS.fila.slice(0,CAP).map(function(a,ix){return (ix+1)+". "+a.aluna_id+" ("+a.turma+")";});
+    return {a:"Com a capacidade em "+CAP+" nesta semana, a fila indica começar por:\n\n"+top.join("\n")+"\n\nA ordem é a do modelo. O corte em "+CAP+" é seu, não dele: aumentar a capacidade alcança mais gente e gasta mais conversas, e a conta de cada opção está na Estação 12.",s:"fila carregada e Estação 12"};
+  }
+
+  /* enviar automaticamente */
+  if(/(envi|manda|dispara)/.test(n)&&/(automat|sozinh|todas|em massa)/.test(n)){
+    return {a:"Isso a ferramenta não faz, por desenho. Ela gera rascunho, a gestora revisa e a gestora envia. Nenhum texto sai daqui sem uma pessoa ler, e a guarda de linguagem roda antes de cada rascunho aparecer na tela.",s:"regra do projeto",refuse:true};
+  }
+
+  /* banco de perguntas */
+  var melhor=null,best=0;
+  for(i=0;i<QA.length;i++){
+    for(j=0;j<QA[i].k.length;j++){
+      var kw=nrm(QA[i].k[j]);
+      if(n.indexOf(kw)>=0&&kw.length>best){melhor=QA[i];best=kw.length;}
+    }
+  }
+  if(melhor)return {a:melhor.a,s:melhor.s,refuse:!!melhor.refuse};
+
+  return {a:"Não tenho isso medido no notebook, e prefiro dizer isso a inventar. Posso responder sobre: por quem começar esta semana, o que o modelo usa e não usa, o que cada limitação significa, e gerar rascunho de mensagem para uma aluna da fila. Se a pergunta for sobre o caso de uma aluna específica, a resposta honesta é que o modelo não fornece motivo por caso, e o caminho é o roteiro de escuta na ficha dela.",s:"sem dado no notebook"};
+}
+function enviarChat(q){
+  if(!q.trim())return;
+  log("u",esc(q));
+  var r=responder(q);
+  log("a",esc(r.a).replace(/\n/g,"<br>")+'<span class="src">'+esc(r.s)+'</span>',r.refuse?"refuse":"");
+}
+var SUGG=["Quem eu procuro primeiro?","Quais alunas precisam de rede de cuidado esta semana?","Gere uma mensagem para Aluna 0142 focada em acesso digital","Posso dizer o risco para a aluna?","O modelo é bom?","O que a Fly precisa coletar?"];
+
+/* ================= navegação e wiring ================= */
+function irPara(v){
+  $$("nav.tabs button").forEach(function(b){b.setAttribute("aria-selected",String(b.getAttribute("data-v")===v));});
+  $$(".view").forEach(function(el){el.classList.toggle("on",el.id==="v-"+v);});
+  window.scrollTo({top:0,behavior:"auto"});
+}
+$$("nav.tabs button").forEach(function(b){ b.addEventListener("click",function(){irPara(b.getAttribute("data-v"));}); });
+$$(".pager a[data-goto]").forEach(function(a){
+  a.addEventListener("click",function(e){e.preventDefault();irPara(a.getAttribute("data-goto"));});
+});
+
+/* gaveta do copiloto */
+function gaveta(abrir){
+  $("#chatDrawer").classList.toggle("open",abrir);
+  $("#chatDrawer").setAttribute("aria-hidden",String(!abrir));
+  $("#backdrop").classList.toggle("on",abrir);
+  $("#btnChat").setAttribute("aria-expanded",String(abrir));
+  if(abrir) setTimeout(function(){$("#chatIn").focus();},240);
+}
+$("#btnChat").addEventListener("click",function(){ gaveta(!$("#chatDrawer").classList.contains("open")); });
+$("#btnChatClose").addEventListener("click",function(){gaveta(false);});
+$("#backdrop").addEventListener("click",function(){gaveta(false);});
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") gaveta(false); });
+
+$("#capRange").addEventListener("input",function(){
+  CAP=parseInt(this.value,10);$("#capVal").textContent=CAP;LS.set("capacidade",CAP);renderFila();
+});
+$("#fTurma").addEventListener("change",renderFila);
+$("#fBusca").addEventListener("input",renderFila);
+$("#fichaSel").addEventListener("change",function(){sel=parseInt(this.value,10);renderFicha();renderFila();});
+$("#btnIrMsg").addEventListener("click",function(){$("#msgAluna").value=String(sel);irPara("mensagens");gerarMsg();});
+$("#btnGerarMsg").addEventListener("click",gerarMsg);
+$("#msgAluna").addEventListener("change",gerarMsg);
+$("#msgTrilha").addEventListener("change",gerarMsg);
+$("#msgCanal").addEventListener("change",gerarMsg);
+
+$("#btnExtrair").addEventListener("click",extrair);
+$("#btnLimparReg").addEventListener("click",function(){$("#regTexto").value="";$("#regOut").innerHTML="";});
+$("#btnSalvarReg").addEventListener("click",function(){
+  var linhas=extrair(), i=parseInt($("#regAluna").value,10), a=DADOS.fila[i];
+  var reg={data:hoje(),aluna_id:a.aluna_id};
+  linhas.forEach(function(l){reg[l.c]=l.v||"";});
+  REGISTROS.unshift(reg);LS.set("registros",REGISTROS);
+  CONTATOS[a.aluna_id]={data:hoje()};LS.set("contatos",CONTATOS);
+  renderHist();renderFila();
+  var o=$("#regOk");o.hidden=false;setTimeout(function(){o.hidden=true;},2200);
+});
+$("#btnExpReg").addEventListener("click",function(){
+  if(!REGISTROS.length)return;
+  var cols=["data","aluna_id"].concat(CAMPOS.map(function(c){return c.c;}));
+  var csv=cols.join(";")+"\n"+REGISTROS.map(function(r){
+    return cols.map(function(c){return '"'+String(r[c]||"").replace(/"/g,'""')+'"';}).join(";");}).join("\n");
+  baixar("registros_passo_firme.csv",csv,"text/csv;charset=utf-8");
+});
+$("#btnExport").addEventListener("click",function(){
+  var cols=["posicao","aluna_id","turma","faixa_atencao","contato"];
+  var csv=cols.join(";")+"\n"+DADOS.fila.map(function(a,i){
+    var c=contatoDe(a.aluna_id);
+    return [i+1,a.aluna_id,a.turma,faixa(i),c?c.data:""].map(function(x){return '"'+String(x)+'"';}).join(";");
+  }).join("\n");
+  baixar("fila_passo_firme.csv",csv,"text/csv;charset=utf-8");
+});
+function linkDireto(nome,txt,tipo){
+  try{
+    var b=new Blob([txt],{type:tipo}),u=URL.createObjectURL(b),a=document.createElement("a");
+    a.href=u;a.download=nome;document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(u);},1500);
+  }catch(e){}
+}
+function baixar(nome,txt,tipo){
+  var p=(window.claude&&window.claude.use)?window.claude.use("downloads"):Promise.resolve(null);
+  p.then(function(d){
+    if(d&&d.save){ d.save({filename:nome,data:txt}).catch(function(){}); }
+    else{ linkDireto(nome,txt,tipo); }
+  },function(){ linkDireto(nome,txt,tipo); });
+}
+
+$("#btnCarregar").addEventListener("click",function(){
+  var t=$("#filaJson").value.trim();
+  if(!t)return;
+  try{
+    var j=JSON.parse(t);
+    if(!j.fila||!j.fila.length)throw new Error("sem campo fila");
+    j.fonte="arquivo"; j.universo=j.universo||60; j.evasoes=j.evasoes||39;
+    j.gerado_em=j.gerado_em||hoje();
+    DADOS=j; LS.set("fila",DADOS); sel=0;
+    preencherSelects(); renderFila(); renderFicha();
+    $("#capRange").max=Math.max(3,DADOS.fila.length);
+    var o=$("#filaOk");o.textContent="fila carregada, "+DADOS.fila.length+" fichas";o.hidden=false;
+    setTimeout(function(){o.hidden=true;},2600);
+  }catch(e){
+    var o2=$("#filaOk");o2.textContent="JSON inválido: "+e.message;o2.style.color="var(--coral-deep)";o2.hidden=false;
+    setTimeout(function(){o2.hidden=true;o2.style.color="";},4000);
+  }
+});
+$("#btnExemplo").addEventListener("click",function(){
+  DADOS=JSON.parse(JSON.stringify(EXEMPLO));LS.set("fila",null);sel=0;
+  try{localStorage.removeItem("pf.fila");}catch(e){}
+  preencherSelects();renderFila();renderFicha();
+});
+$("#btnTestar").addEventListener("click",function(){
+  var u=$("#apiUrl").value.trim();
+  if(!u){$("#apiOut").innerHTML='<div class="verdict block">Informe o endereço da API.</div>';return;}
+  $("#apiOut").innerHTML='<div class="verdict ok">Tentando '+esc(u)+'/saude ...</div>';
+  fetch(u.replace(/\/$/,"")+"/saude").then(function(r){return r.json();}).then(function(j){
+    $("#apiOut").innerHTML='<div class="verdict ok">Conectado. Modelo: '+esc(j.campeao||"?")+' · limiar '+esc(j.limiar||"?")+'</div>';
+  }).catch(function(e){
+    $("#apiOut").innerHTML='<div class="verdict block">Não consegui falar com a API ('+esc(e.message)+'). '
+      +'A tela continua funcionando inteira sobre o JSON colado acima: nenhuma função depende de rede.</div>';
+  });
+});
+$("#btnMapear").addEventListener("click",mapear);
+$("#btnLimparMapa").addEventListener("click",function(){$("#cabecalhos").value="";$("#mapaOut").innerHTML="";});
+
+$("#chatSend").addEventListener("click",function(){enviarChat($("#chatIn").value);$("#chatIn").value="";});
+$("#chatIn").addEventListener("keydown",function(e){ if(e.key==="Enter"){enviarChat(this.value);this.value="";} });
+$("#regAluna").addEventListener("change",function(){});
+
+/* ================= init ================= */
+$("#capRange").value=CAP; $("#capVal").textContent=CAP;
+$("#capRange").max=Math.max(3,DADOS.fila.length);
+$("#regTexto").value=NOTA_EX;
+$("#cabecalhos").value=CABEC_EX;
+$("#filaJson").value=JSON.stringify({gerado_em:"2026-09-05",campeao:"Random Forest",limiar:0.491,universo:60,evasoes:39,fila:[EXEMPLO.fila[0]]},null,2);
+preencherSelects();
+renderFila();
+renderFicha();
+extrair();
+mapear();
+renderHist();
+$("#sugg").innerHTML=SUGG.map(function(s){return '<button type="button">'+esc(s)+'</button>';}).join("");
+$$("#sugg button").forEach(function(b){ b.addEventListener("click",function(){enviarChat(b.textContent);}); });
+log("a","Oi. Eu respondo sobre a fila e sobre o que o modelo mede, sempre citando a estação do notebook. Quando a resposta não existe nos dados, eu digo que não existe em vez de inventar.<span class=\"src\">copiloto interno, uso restrito à equipe da Fly</span>");
+})();
+</script>
