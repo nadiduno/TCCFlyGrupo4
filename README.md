@@ -17,10 +17,12 @@ O perfil das inscritas — maioria preta e parda, escolarizada e jovem-adulta (7
 
 ---
 
----
-##  Visão geral da arquitetura
+
+## Visão geral da arquitetura
+
 O pipeline segue o fluxo clássico de um projeto de ciência de dados, do dado bruto ao modelo:
 
+```text
 ┌─────────────────────┐
 │  Google Sheets      │  8 abas (turmas 10–23), formulários que
 │  (fonte dos dados)  │  mudaram ao longo do tempo
@@ -33,15 +35,15 @@ O pipeline segue o fluxo clássico de um projeto de ciência de dados, do dado b
 └──────────┬──────────┘
            │  2. Conhecer (raio-x): shape, info, nulos, mapa de preenchimento
            ▼
-┌─────────────────────┐
-│  Limpeza em lote    │  colunas mortas · cabeçalho vazado · normalização
-│  (dataFly)          │  categórica · dicionário de mapeamentos · UFs · idades
-└──────────┬──────────┘
+┌──────────────────────┐
+│  Limpeza em lote     │  colunas mortas · cabeçalho vazado · normalização
+│  (dataFly)           │  categórica · dicionário de mapeamentos · UFs · idades
+└──────────┬───────────┘
            │  3. Criar TARGET (evadiu) a partir de status_aprovacao
            ▼
-┌─────────────────────┐
-│  Análise exploratória│  perfil das inscritas + taxas de evasão + qui-quadrado
-└──────────┬──────────┘
+┌──────────────────────┐
+│  Análise exploratória │  perfil das inscritas + taxas de evasão + qui-quadrado
+└──────────┬───────────┘
            │  4. Modelagem (trava de segurança por volume mínimo)
            ▼
 ┌─────────────────────┐
@@ -51,8 +53,11 @@ O pipeline segue o fluxo clássico de um projeto de ciência de dados, do dado b
            │  5. Camada de IA (orientação + acionamento da rede de acolhimento)
            ▼
         Ação da Fly
+```
 
-**Princípio metodológico central:** constantes com significado ("Não respondeu") podem vir antes do split; qualquer estatística aprendida da base (imputação, encoding) só entra **dentro do Pipeline, no treino** — evitando vazamento de dados (*data leakage*).
+**Princípio metodológico central:** constantes com significado (`"Não respondeu"`) podem vir antes do split; qualquer estatística aprendida da base (imputação, encoding) só entra **dentro do Pipeline, no treino** — evitando vazamento de dados (*data leakage*).
+
+---
 ---
 
 ## 📖 Sobre este projeto
