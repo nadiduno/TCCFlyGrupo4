@@ -141,7 +141,7 @@ Em cinco frases:
 
 1. As 163 colunas eram uma dúzia de perguntas escritas de **cinco jeitos diferentes**; a costura documentada recuperou variáveis que, sozinhas, seriam inutilizáveis.
 2. Só uma fração das inscrições chega ao fim do funil com perfil **e** desfecho — e a maior perda vem de **padronização de chave** (só 21% casam), não de dado inexistente.
-3. O alvo `evadiu` é uma mistura de duas definições, e a fonte majoritária confunde evasão com registro faltante. **A taxa medida é um teto, não um valor exato.**
+3. O alvo `evadiu` é uma mistura de duas definições, e a fonte majoritária confunde evasão com registro faltante. **A taxa medida (65% num universo de 60 alunas) é um teto, não a evasão real da Fly.**
 4. Nenhuma variável do formulário de inscrição tem associação mais que fraca com a evasão — e o **teste de embaralhamento** mede, com método, o quanto disso é sinal e o quanto é acaso (p empírico = **0,0244**: existe sinal real, ainda que fraco).
 5. O gargalo é a **ausência de dados de engajamento durante o curso**. O notebook não descobriu quem evade: descobriu **qual dado a Fly precisa passar a coletar** para que a pergunta tenha resposta.
 
@@ -225,26 +225,25 @@ Os dados contêm informações sensíveis de alunas reais (nome, endereço, rela
 
 ## 🤖 O modelo — a régua e a campeã
 
-Comparação de candidatos, **sempre com o baseline dentro** (para expor a armadilha da acurácia):
+A régua foi escolhida **antes** de olhar os resultados: a métrica principal é a **AP (average precision / AUC-PR)**, que mede se o modelo **ordena bem a fila de risco** — o uso real. Acurácia é métrica proibida sozinha. O protocolo: **50 provas por modelo** (validação cruzada estratificada, 5 dobras × 10 repetições), sempre com o **baseline dentro**.
 
-| Modelo | Acurácia | Recall (evadiu) | F1 (evadiu) |
-|--------|:--------:|:---------------:|:-----------:|
-| Baseline (chute na classe mais comum) | 0,67 | 0,00 | 0,00 |
-| Gradient Boosting | 0,65 | 0,61 | 0,54 |
-| Random Forest | 0,59 | 0,78 | 0,56 |
-| **★ Regressão Logística (campeã)** | 0,63 | **0,89** | **0,62** |
+| Modelo | AP (AUC-PR) | Recall | F1 | Acurácia |
+|--------|:-----------:|:------:|:--:|:--------:|
+| **★ Random Forest (campeã)** | **0,969** | 0,81 | 0,85 | 0,82 |
+| Regressão Logística | 0,950 | 0,77 | 0,82 | 0,79 |
+| Gradient Boosting | 0,921 | 0,83 | 0,82 | 0,77 |
+| Árvore rasa | 0,874 | 0,72 | 0,76 | 0,73 |
+| Baseline (chuta a classe mais comum) | 0,644 | 1,00 | 0,78 | 0,64 |
 
-O baseline tem a maior acurácia (67%) e **recall 0** — acerta muito e não encontra ninguém que evade. Por isso a régua é o **recall**, não a acurácia.
+Repare no baseline: ele tem **recall 1,00** — porque chuta que *todas* evadem — e mesmo assim fica no **piso do acaso** (AP 0,644). É a prova de que recall ou acurácia **sozinhos** enganam; a régua justa é a AP.
 
-**Modelo campeão: Regressão Logística** — melhor recall (0,89) e F1 (0,62). Em português: **de cada 9 alunas que vão evadir, o modelo encontra 8 a tempo de acolher.** Salvo em `modelo_evasao_G4.joblib` para alimentar o FixFly.
+**Modelo campeão: Random Forest** — maior AP na média das 50 provas (**0,969**), afinada por GridSearch para **AP 0,975**. No teste final: **recall 0,90** (de 10 evasões, encontra 9), precisão 0,82, F1 0,857. Salvo em `modelo_evasao_G4.joblib` para alimentar o FixFly.
 
-> A decisão não vem de uma rodada só: a comparação usa **validação cruzada** e um **teste de embaralhamento** (Estação 14) para separar sinal de acaso. Com este `n`, o ganho é real mas modesto — e o notebook diz isso com todas as letras.
-
----
+> **Honestidade sobre o `n`:** o AP variou de **0,89 a 1,00** entre as 50 provas — com 60 alunas, o desempenho depende de quais caem no treino, e reportar só a média esconderia metade da verdade. O **limiar operacional** foi fixado em 0,491 (o maior que ainda entrega recall ≥ 80%), e a decisão vem da validação cruzada, não de uma prova única.
 
 ## 🧾 Ficha técnica do modelo (model card)
 
-O notebook gera automaticamente uma ficha técnica (`ficha_do_modelo.json`) junto com o modelo. Ela documenta: o modelo campeão e seus hiperparâmetros; a métrica principal (*average precision* / AUC-PR) comparada ao piso do acaso; o p-valor do teste de embaralhamento; o limiar operacional escolhido; e — o mais importante — dois campos que raramente aparecem em modelos em produção no Brasil:
+O notebook gera automaticamente uma ficha técnica (`ficha_do_modelo.json`) junto com o modelo. Ela documenta: o modelo campeão (**Random Forest**) e seus hiperparâmetros; a métrica principal (*average precision* / AUC-PR = 0,975 na validação, contra piso do acaso 0,644); o **p-valor empírico do teste de embaralhamento = 0,0244** (o acaso tira em média 0,75, não zero — e o modelo real, 0,975); o limiar operacional escolhido (0,491); e — o mais importante — dois campos que raramente aparecem em modelos em produção no Brasil:
 
 | Campo | Conteúdo |
 |-------|----------|
