@@ -1,0 +1,22 @@
+# FixFly — Previsão de Evasão na Fly Educação
+# Grupo Ada Lovelace (G4) · Turma Fly · diversiData
+# Python 3.10+
+
+# --- manipulação e leitura de dados ---
+pandas>=2.2
+numpy>=2.0
+openpyxl>=3.1          # leitura de .xlsx (base e backlogs)
+pyarrow>=15.0          # checkpoints .parquet (colunar, comprimido)
+gdown>=5.0             # download dos arquivos a partir do Google Drive
+
+# --- análise, modelagem e avaliação ---
+scikit-learn>=1.4      # pipeline, modelos, GridSearch, métricas
+scipy>=1.11            # qui-quadrado / V de Cramér
+joblib>=1.3            # salvar/carregar o modelo (.joblib)
+
+# --- visualização ---
+matplotlib>=3.8
+seaborn>=0.13
+
+# --- exploração de nulos (opcional, usado no raio-x da base) ---
+missingno>=0.5

@@ -1,0 +1,56 @@
+# ==========================================================
+# FixFly — .gitignore
+# Regra de ouro: dado é gente. Nada de dado real da aluna no repositório.
+# ==========================================================
+
+# --- DADOS SENSÍVEIS (nunca versionar) ---
+dados/
+data/
+*.parquet
+*.joblib
+ficha_do_modelo.json
+fila_fixfly.json
+# bases brutas e derivadas
+BDFLYG4*.csv
+BDFLYG4*.xlsx
+dataFly*.csv
+dataFly*.parquet
+# a base pública pode ficar; descomente se quiser ignorar também:
+# beneficio_pedemeia.csv
+# tx_rend_brasil_regioes_ufs_2023.xlsx
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Ambientes virtuais ---
+venv/
+env/
+.venv/
+ENV/
+
+# --- Jupyter / Colab ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+.virtual_documents/
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editores / IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Logs e temporários ---
+*.log
+*.tmp
+tmp/

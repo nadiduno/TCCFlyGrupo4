@@ -1,260 +1,281 @@
-# Passo Firme — Previsão de Evasão na Fly Educação
+# 🚀 FixFly — prever para acolher, não para rotular
 
-> **Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
+**Grupo Ada Lovelace (G4) · Turma Fly · diversiData**
 
-Modelo preditivo de potencial de empregabilidade e mobilidade financeira para egressas da Fly Educação: um modelo que identifica quem tem mais risco de evadir, **para agir antes**.
+> Cada Falso Negativo é uma mulher que a gente poderia ter acolhido **antes**. O modelo existe para chegar antes da evasão, nunca para rotular ninguém. 💛
 
-**Grupo Ada Lovelace** — Brenda Amaral · Fernanda da Silva · Nadiveth Duno · Profana Buzato · Sheilliane Santos · Vicência Vitória Souza
-**Orientadora:** Andressa Freires · Turma Fly · diversiData · agosto/2026
-
----
-
-## 📌 Contexto
-
-A evasão escolar é um dos principais desafios da educação brasileira e está associada a diversos fatores econômicos, sociais e demográficos, como renda familiar, região de residência, gênero, raça/cor, acesso a equipamento e internet, sobrecarga de trabalho e cuidado, entre outros.
-
-O projeto **Passo Firme** parte de uma constatação central: quem desiste de estudar raramente o faz por falta de vontade, mas pelo **acúmulo de obstáculos** — cansaço do trabalho, aperto financeiro, isolamento e questões de saúde mental. A proposta une tecnologia e apoio humano por meio de modelos preditivos em Python que identificam estudantes em risco de evasão, e uma camada de IA que aciona a rede de acolhimento da ONG Fly Educação ( com possibilidades de mentoria, escuta ativa, suporte socioemocional) **antes que a desistência aconteça**.
-
-O perfil das inscritas — maioria preta e parda, escolarizada e jovem-adulta (78% pretas + pardas). A entrega de ouro do modelo é uma **lista de fatores de risco acionáveis**: se computador/internet pesarem → empréstimo de equipamento; se horário pesar → turmas alternativas; se confiança inicial ou quesões de saúde mental pesarem → mentoria reforçada e acolhimento qualificado logo nas primeiras semanas.
-
-**Pergunta principal:** Como fatores socioeconômicos e demográficos influenciam a evasão escolar e de que forma uma IA orientadora pode auxiliar estudantes em situação de vulnerabilidade por meio do acesso a informações sobre programas de apoio e permanência?
+🔗 **Repositório:** https://github.com/nadiduno/TCCFlyGrupo4
 
 ---
 
-##  Visão geral da arquitetura
+## 📖 Sobre este projeto
 
-O pipeline segue o fluxo clássico de um projeto de ciência de dados, do dado bruto ao modelo:
+Este é o Trabalho de Conclusão de Curso do **Grupo Ada Lovelace (G4)**, feito para a **Fly** dentro do programa de formar mulheres para o mercado de tecnologia.
+
+O ponto de partida não foi "vamos treinar um modelo". Foi uma pergunta concreta, feita por quem trabalha todo dia tentando manter mulheres dentro de um curso de tecnologia:
+
+> **Dá para prever, no momento da inscrição, quais alunas correm mais risco de evadir do curso da Fly, usando só o que elas responderam no formulário?**
+
+Repare na restrição: *só o que elas responderam no formulário*. Essa frase é o coração do trabalho — e é ela que produz a resposta mais importante do projeto, que você vai ler no fim deste README.
+
+O notebook pega os arquivos que a Fly disponibilizou e vai até o fim: entende a base, reconstrói as variáveis, testa hipóteses, treina modelos, mede com honestidade — e diz exatamente o que dá e o que não dá para afirmar hoje. A ferramenta **FixFly** transforma o resultado em ação de acolhimento na mão das gestoras.
+
+### As duas regras inegociáveis do projeto
+
+1. **Dado é gente.** A base bruta tem texto livre com endereço, CPF e relato pessoal. Em nenhum momento exibimos a base crua — criamos um **script de anonimização em Python** e só trabalhamos com a versão harmonizada, 100% não identificável (LGPD por design).
+2. **Nada de número enfeitado.** Se o modelo for fraco, o notebook diz que é fraco, mostra a conta e explica o que faltou. **Ausência de resultado documentada é resultado.**
+
+---
+
+## 🗂️ Sumário
+
+- [O que este projeto entrega](#-o-que-este-projeto-entrega)
+- [Como o notebook é organizado](#-como-o-notebook-é-organizado-as-estações)
+- [Principais achados](#-principais-achados)
+- [Estrutura do repositório](#-estrutura-do-repositório)
+- [Como rodar](#️-como-rodar)
+- [Sobre os dados](#-sobre-os-dados)
+- [O modelo — a régua e a campeã](#-o-modelo--a-régua-e-a-campeã)
+- [Ficha técnica do modelo (model card)](#-ficha-técnica-do-modelo-model-card)
+- [FixFly — a camada de acolhimento](#-fixfly--a-camada-de-acolhimento)
+- [Limitações](#️-limitações-assumidas-com-todas-as-letras)
+- [Próximos passos](#️-próximos-passos)
+- [Time](#-time)
+
+---
+
+## 🎯 O que este projeto entrega
+
+| # | Entrega | Onde no notebook |
+|---|---------|------------------|
+| 1 | Raio-X e reconstrução da base: **163 colunas bagunçadas viram 15 variáveis limpas** e documentadas | Estações 1 a 5 |
+| 2 | Um alvo `evadiu` **auditado**, com as fontes, as regras e os riscos escritos | Estação 6 |
+| 3 | EDA com hipóteses, incerteza medida e o **confundimento exposto** | Estações 7 e 8 |
+| 4 | Modelo honesto: comparação com validação cruzada, **baseline**, limiar escolhido pelo custo real, teste de embaralhamento e ficha técnica | Estações 9 a 15 |
+| 5 | **FixFly**: a fila vira ação de acolhimento, com guarda de linguagem e trava ética | Estação 16 + `Prototivo-IAGenerativa-Fly.html` |
+
+### Como ler o notebook
+
+Todo bloco de código tem duas âncoras:
+
+- **🔎 O que vamos fazer** — antes do código, diz o objetivo em uma frase.
+- **📖 Como ler** — depois do resultado, diz o que aquilo significa e o que **não** significa.
+
+Se você só quiser a história do projeto, leia as duas âncoras e pule o código.
+
+---
+
+## 🧭 Como o notebook é organizado (as estações)
+
+| Estação | Pergunta que responde |
+|---------|----------------------|
+| 0 | Ambiente, semente aleatória e identidade visual (verde = ficou, coral = evadiu, sempre) |
+| 1 | O que é cada arquivo que a Fly mandou? |
+| 2 | Raio-X da base crua: tamanho, tipos de coluna, vazio estrutural × vazio real, dado pessoal |
+| 3 | Costura das **163 colunas em 15 conceitos**, e padronização de cada variável |
+| 4–5 | Cortes de uso e teste das hipóteses do grupo |
+| 6 | Construção auditada do alvo `evadiu`, cruzando inscrições com backlogs |
+| 7 | Análise exploratória, força de associação de cada variável (**V de Cramér**) |
+| 8 | Limitações escritas **antes** de qualquer modelo ser treinado |
+| 9–11 | Preparo dos dados e disputa entre 5 modelos sob o mesmo protocolo |
+| 12 | Ajuste de hiperparâmetros e escolha do limiar de decisão pelo **custo real** (não o padrão 0,5) |
+| 13–14 | Avaliação no teste e teste de embaralhamento (*permutation test*) |
+| 15 | A pergunta que a Fly realmente faz: *"por quem eu começo a ligar?"* |
+| 16 | O que fazer com o resultado: pedido de dados, próximos passos e a base para o **FixFly** |
+
+---
+
+## 🔍 Principais achados
+
+Em cinco frases:
+
+1. As 163 colunas eram uma dúzia de perguntas escritas de **cinco jeitos diferentes**; a costura documentada recuperou variáveis que, sozinhas, seriam inutilizáveis.
+2. Só uma fração das inscrições chega ao fim do funil com perfil **e** desfecho — e a maior perda vem de **padronização de chave** (só 21% casam), não de dado inexistente.
+3. O alvo `evadiu` é uma mistura de duas definições, e a fonte majoritária confunde evasão com registro faltante. **A taxa medida é um teto, não um valor exato.**
+4. Nenhuma variável do formulário de inscrição tem associação mais que fraca com a evasão — e o **teste de embaralhamento** mede, com método, o quanto disso é sinal e o quanto é acaso (p empírico = **0,0244**: existe sinal real, ainda que fraco).
+5. O gargalo é a **ausência de dados de engajamento durante o curso**. O notebook não descobriu quem evade: descobriu **qual dado a Fly precisa passar a coletar** para que a pergunta tenha resposta.
+
+O gráfico final (Estação 15) traduz isso em algo acionável: comparando a fila ordenada pelo modelo com uma busca aleatória, mostra **quantas alunas em risco a equipe alcança se procurar as primeiras N da fila** — a métrica que importa para quem faz o acolhimento.
+
+---
+
+## 📁 Estrutura do repositório
 
 ```
-┌─────────────────────┐
-│  Google Sheets      │  8 abas (turmas 10–23), formulários que
-│  (fonte dos dados)  │  mudaram ao longo do tempo
-└──────────┬──────────┘
-           │  1. Carregar → renomear colunas (script) → empilhar
-           ▼
-┌─────────────────────┐
-│  dataFlyRaw         │  2.348 linhas × 91 colunas (congelado em .parquet)
-│  (backup intocado)  │
-└──────────┬──────────┘
-           │  2. Conhecer (raio-x): shape, info, nulos, mapa de preenchimento
-           ▼
-┌─────────────────────┐
-│  Limpeza em lote    │  colunas mortas · cabeçalho vazado · normalização
-│  (dataFly)          │  categórica · dicionário de mapeamentos · UFs · idades
-└──────────┬──────────┘
-           │  3. Criar TARGET (evadiu) a partir de status_aprovacao
-           ▼
-┌─────────────────────┐
-│  Análise exploratória│  perfil das inscritas + taxas de evasão + qui-quadrado
-└──────────┬──────────┘
-           │  4. Modelagem (trava de segurança por volume mínimo)
-           ▼
-┌─────────────────────┐
-│  Pipeline sklearn   │  split → ColumnTransformer → OneHot → LogisticRegression
-│  (foco no RECALL)   │  class_weight='balanced'
-└──────────┬──────────┘
-           │  5. Camada de IA (orientação + acionamento da rede de acolhimento)
-           ▼
-        Ação da Fly
+TCCFlyGrupo4/
+├── README.md                                  # este arquivo
+├── Evasao FLy.pdf                             # relatório/guia do projeto
+├── Prototivo-IAGenerativa-Fly.html            # ferramenta FixFly: fila, mensagens, copiloto e ficha técnica
+├── renameCols_maps.py                         # dicionário de renomeação de colunas por turma
+├── tcc_evasaofly_g4cienciadedadosfly.py       # notebook exportado (.py) — versões do fluxo/limpeza
+│   └── (…v2, …v3, …V15)                        # histórico da evolução da limpeza e da modelagem
+├── beneficio_pedemeia.csv                     # base pública — programa Pé-de-Meia (não integrada)
+├── tx_rend_brasil_regioes_ufs_2023.xlsx       # base pública — rendimento/evasão por UF, 2023 (não integrada)
+├── requirements.txt                           # dependências
+├── .gitignore                                 # ignora dados sensíveis e artefatos gerados
+└── dados/                                      # gerado ao rodar o notebook (NÃO versionado)
+    ├── modelo_evasao_G4.joblib                # modelo treinado + limiar + lista de variáveis
+    ├── ficha_do_modelo.json                   # model card gerado automaticamente
+    └── fila_fixfly.json                       # fila de prioridade exportada para o FixFly
 ```
 
-**Princípio metodológico central:** constantes com significado (`"Não respondeu"`) podem vir antes do split; qualquer estatística aprendida da base (imputação, encoding) só entra **dentro do Pipeline, no treino** — evitando vazamento de dados (*data leakage*).
+> 💡 A pasta `dados/` é gerada localmente ao rodar o notebook e pode conter artefatos derivados de dados sensíveis. Ela já está no `.gitignore`.
 
 ---
 
-## 📏 Regras
+## ⚙️ Como rodar
 
-Decisões de projeto que valem como convenção para todo o notebook:
+### Pré-requisitos
+- Python 3.10 ou superior
+- Acesso aos arquivos originais da Fly (base de inscrições + backlogs) — os dados **não** estão neste repositório (ver *Sobre os dados*).
 
-1. **`dataFlyRaw` é intocável.** Toda limpeza é feita em uma cópia (`dataFly`). O bruto fica congelado em `.parquet` como backup.
-2. **Vazio estrutural ≠ erro da aluna.** Como cada turma respondeu um formulário diferente, muitos nulos ocorrem porque a pergunta *não existia* naquela época. Esses casos são rotulados como `"Pergunta ausente na turma"`; ausências reais viram `"Não respondeu"`.
-3. **Nada de moda/mediana antes do split.** Nenhuma imputação estatística no pré-processamento manual — só rótulos-constante. Estatística aprendida só dentro do Pipeline.
-4. **Recuperar antes de descartar.** Idades impossíveis são investigadas (data colada, `data_nascimento`) antes de virarem nulo. Nenhuma linha é descartada por erro pontual.
-5. **`"Não aprovada"` não é evasão.** Quem não entrou no programa não pode ter evadido — fica fora do universo do modelo (`<NA>`).
-6. **Texto livre não se "limpa".** Relatos e descrições das alunas são preservados; a normalização só atinge colunas categóricas (≤ 60 valores únicos).
-7. **Atualização = re-executar, não re-digitar.** Tudo centralizado em funções (`criar_target`) e dicionários (`MAPEAMENTOS`). Quando novos status chegam, basta re-rodar.
-8. **A métrica que importa é o RECALL da classe "Evadiu".** Encontrar quem precisa de apoio vale mais do que acurácia geral.
-9. **Correlação não é causa.** Os achados apontam onde apoiar, nunca "culpam" perfis.
-
----
-
-## Estrutura das pastas
-
-Arquivos atuais do repositório:
-
-```
-passo-firme/
-├── README.md                                          # este arquivo
-├── Copy_of_TCC_-_EvasaoFly_-_G4CienciaDeDadosFlyV7.ipynb  # notebook principal (versão atual)
-├── renameCols_maps.py                                 # dicionário de renomeação de colunas por turma
-├── beneficio_pedemeia.csv                             # dados públicos — programa Pé-de-Meia (ainda não integrado)
-└── tx_rend_brasil_regioes_ufs_2023.xlsx               # taxas de rendimento/evasão por região/UF, 2023 (ainda não integrado)
-```
-
-**O que é cada arquivo:**
-
-| Arquivo | Papel no projeto | Status |
-|---------|------------------|--------|
-| `...FlyV7.ipynb` | Notebook principal e mais atual — todo o fluxo (carga → limpeza → target → EDA → modelagem) | ✅ ativo |
-| `renameCols_maps.py` | Script com o `rename_maps` — mapeia os nomes originais das colunas de cada turma para nomes padronizados | ✅ em uso |
-| `beneficio_pedemeia.csv` | Base pública para cruzar elegibilidade a programas de permanência (Pé-de-Meia) | ⏳ baixada, **ainda não usada** no notebook |
-| `tx_rend_brasil_regioes_ufs_2023.xlsx` | Base pública de rendimento/evasão por região e UF (2023) para contextualizar os achados | ⏳ baixada, **ainda não usada** no notebook |
-
-> **Nota de transparência:** na versão atual (V7), o pipeline usa **apenas os dados internos da Fly** (formulários das turmas). As duas bases externas acima já estão no repositório, mas ainda **não foram integradas** ao fluxo — elas são insumo para os próximos passos (cruzamento com programas de apoio e benchmark regional de evasão). Ver *Possíveis melhorias do modelo*.
-
-> **Observação sobre organização:** conforme o projeto cresce, vale separar em subpastas — `notebooks/`, `scripts/` e `data/` (com `raw/` e `processed/`). Como os dados das alunas são sensíveis, mantenha as bases internas fora do versionamento (`.gitignore`) e trabalhe com dados anonimizados/agregados. As bases externas são públicas e podem ser versionadas normalmente.
-
----
-
-## ⚙️ Setup
-
-O projeto foi desenvolvido no **Google Colab** (Python 3.10+). Para reproduzir:
-
-### 1. Instalar dependências
-
+### 1. Clone o repositório
 ```bash
-pip install missingno gdown pyarrow openpyxl scikit-learn scipy \
-            pandas numpy matplotlib seaborn -q
+git clone https://github.com/nadiduno/TCCFlyGrupo4.git
+cd TCCFlyGrupo4
 ```
 
-Ou, com `requirements.txt`:
+### 2. Crie um ambiente virtual (recomendado)
+```bash
+python -m venv venv
+source venv/bin/activate      # Linux/Mac
+venv\Scripts\activate         # Windows
+```
 
+### 3. Instale as dependências
 ```bash
 pip install -r requirements.txt
 ```
 
-**Versões de referência usadas no desenvolvimento:**
+### 4. Rode o notebook
+Abra o notebook no **Google Colab** (recomendado) ou no Jupyter e execute **Runtime → Run all**. Ele cria automaticamente a pasta `dados/` com o modelo treinado (`.joblib`) e a ficha técnica (`.json`).
 
-| Pacote  | Versão |
-|---------|--------|
-| pandas  | 2.2.2  |
-| numpy   | 2.0.2  |
-| seaborn | 0.13.2 |
+> ⚠️ O notebook lê os dados a partir de links do Google Drive/Sheets. Para rodar com seus próprios dados, substitua as URLs `url_base` e `url_backlog` no início do notebook pelos caminhos dos seus arquivos.
 
-### 2. Baixar o script de renomeação
-
-O notebook baixa automaticamente o `renameCols_maps.py` via `gdown` (Google Drive). Alternativamente, mantenha-o em `scripts/` e importe localmente:
-
-```python
-from renameCols_maps import rename_maps
+### 5. Abra o FixFly
+O `Prototivo-IAGenerativa-Fly.html` é **autocontido** — não precisa de servidor nem instalação. Basta abrir no navegador:
+```bash
+xdg-open "Prototivo-IAGenerativa-Fly.html"    # Linux
+open "Prototivo-IAGenerativa-Fly.html"        # Mac
+start "Prototivo-IAGenerativa-Fly.html"       # Windows
 ```
-
-### 3. Executar
-
-Rode o notebook **do início ao fim**. O loader baixa as abas do Google Sheets, a limpeza em massa roda sozinha e `criar_target` reconstrói a coluna `evadiu`.
+Ele abre com uma fila de exemplo carregada. Para usar a fila real gerada pelo notebook, veja a aba **Base e conexão** dentro da própria ferramenta.
 
 ---
 
-## 🔧 Configuração
+## 🔒 Sobre os dados
 
-Parâmetros ajustáveis no notebook:
+Os dados contêm informações sensíveis de alunas reais (nome, endereço, relatos pessoais, CPF em abas antigas). Por isso:
 
-| Parâmetro | Onde | Valor padrão | Função |
-|-----------|------|--------------|--------|
-| `sheet_id` | Seção 1.1 | `1y0cfHPKjqp75...` | ID da planilha do Google Sheets |
-| `abas` | Seção 1.1 | dict de 8 turmas | Mapeamento aba → nome da planilha |
-| `PRESENTE_MIN` | Seção 2.2 | `5` (%) | Preenchimento mínimo para considerar que a pergunta existia na turma |
-| `ANO_REF` | Seção 3.6 | `2026` | Ano de referência para cálculo de idade |
-| `FEATURES_CAT` | Seção 6 | `['raca_etnia', 'escolaridade', 'faixa_etaria', 'renda_familiar_pessoa', 'uf']` | Variáveis de entrada do modelo |
-| `MINIMO_ALUNAS` | Seção 6 | `300` | **Trava de segurança**: só treina com volume razoável de target |
-
-**Paleta de cores:** roxo `#7b5ea7`, cinza `#A9A9A9`, teal `#0f6e52`.
-
-Para **atualizar com novos dados**, há dois caminhos (ambos em lote):
-
-- **Caminho A** — chegou uma planilha nova com `nome_completo` + `status_aprovacao`: fazer o `merge`, atualizar o status e chamar `criar_target` (o target se refaz sozinho).
-- **Caminho B** — o status veio direto no Sheets: basta **re-executar o notebook** do início.
+- A **base crua nunca é exibida** em nenhum ponto do notebook — apenas a versão harmonizada e anonimizada, gerada por um **script de anonimização em Python** que o próprio grupo criou.
+- Os arquivos de dados **não** fazem parte deste repositório e não devem ser commitados (o `.gitignore` já bloqueia).
+- Qualquer reprodução deve seguir o mesmo cuidado: **tratar dado como gente, não como planilha.**
 
 ---
 
-## 🎯 Planejamento de aplicabilidade
+## 🤖 O modelo — a régua e a campeã
 
-O modelo não é um fim em si — ele alimenta um **ecossistema de acolhimento** dividido em duas frentes:
+Comparação de candidatos, **sempre com o baseline dentro** (para expor a armadilha da acurácia):
 
-### Soluções internas (relacionamento Fly ↔ alunas)
-- E-mail automatizado disparado quando os indicadores se aproximam do risco de evasão.
-- Acompanhamento pedagógico personalizado e frequente com quem não está acompanhando as aulas.
-- Monitoramento de presença ativa (câmera aberta, participação real) para o professor identificar focos de evasão durante as aulas.
-- Plantão de dúvidas e canais de acolhimento ao longo da semana.
+| Modelo | Acurácia | Recall (evadiu) | F1 (evadiu) |
+|--------|:--------:|:---------------:|:-----------:|
+| Baseline (chute na classe mais comum) | 0,67 | 0,00 | 0,00 |
+| Gradient Boosting | 0,65 | 0,61 | 0,54 |
+| Random Forest | 0,59 | 0,78 | 0,56 |
+| **★ Regressão Logística (campeã)** | 0,63 | **0,89** | **0,62** |
 
-### Busca por parcerias (externo)
-- **Falta de equipamento** → ponte de doação de computadores/wi-fi.
-- **Saúde mental** → rede de profissionais com atendimento popular ou gratuito.
-- **Falta de renda** → rede de empresas parceiras para oportunidades de trabalho.
+O baseline tem a maior acurácia (67%) e **recall 0** — acerta muito e não encontra ninguém que evade. Por isso a régua é o **recall**, não a acurácia.
 
-### Camada de IA orientadora
-Uma IA generativa que traduz o resultado do modelo em **recomendações práticas e personalizadas**. Uma evolução possível: gerar um **índice de risco de evasão** (baixo/moderado/alto) com explicação dos fatores, programas compatíveis com o perfil da estudante e orientações sobre onde buscar apoio — conectando também a programas públicos (Pé-de-Meia, Bolsa Família, PNAE, PNATE, e iniciativas estaduais/municipais).
+**Modelo campeão: Regressão Logística** — melhor recall (0,89) e F1 (0,62). Em português: **de cada 9 alunas que vão evadir, o modelo encontra 8 a tempo de acolher.** Salvo em `modelo_evasao_G4.joblib` para alimentar o FixFly.
 
-**Propósito → Processo → Resultado:** evitar que as alunas desistam → construir uma rede forte (interna + parcerias) → transformação real na vida das alunas, com a Fly comprovando o uso de IA para prever evasão e conquistar novas parcerias.
+> A decisão não vem de uma rodada só: a comparação usa **validação cruzada** e um **teste de embaralhamento** (Estação 14) para separar sinal de acaso. Com este `n`, o ganho é real mas modesto — e o notebook diz isso com todas as letras.
 
 ---
 
-## 🧪 Contexto dos dados de treino e teste
+## 🧾 Ficha técnica do modelo (model card)
 
-**Fonte:** formulários de inscrição/seleção da Fly Educação (turmas 10–23), consolidados em **2.348 linhas × 91 colunas**.
+O notebook gera automaticamente uma ficha técnica (`ficha_do_modelo.json`) junto com o modelo. Ela documenta: o modelo campeão e seus hiperparâmetros; a métrica principal (*average precision* / AUC-PR) comparada ao piso do acaso; o p-valor do teste de embaralhamento; o limiar operacional escolhido; e — o mais importante — dois campos que raramente aparecem em modelos em produção no Brasil:
 
-### O desafio central: "vazio estrutural"
-Como a Fly evoluiu seus processos, **cada turma respondeu a um formulário diferente**. Boa parte dos nulos não é erro — é a pergunta que simplesmente não existia naquela época. Por isso a distinção rigorosa entre `"Não respondeu"` e `"Pergunta ausente na turma"`.
+| Campo | Conteúdo |
+|-------|----------|
+| ✅ **Uso permitido** | ordenar a fila de prioridade para ações de acolhimento |
+| ❌ **Uso proibido** | informar risco individual à aluna · decidir desligamento, bolsa ou seleção · tirar conclusões sobre grupos com menos de 10 alunas |
 
-### A variável-alvo (`evadiu`)
-Derivada de `status_aprovacao`:
-
-| Status | Situação | `evadiu` |
-|--------|----------|----------|
-| Formada | Concluiu o programa | `0` |
-| Aprovada | Entrou mas não formou | `1` |
-| Não aprovada | Nunca entrou (seleção, não evasão) | `<NA>` (fora do universo) |
-| Sem status | Aguardando dados de outras turmas | `<NA>` |
-
-### Estado atual do target (parcial)
-
-| Situação | Contagem |
-|----------|----------|
-| Aguardando dados da turma | 1.177 |
-| Não aprovada (não entrou) | 1.004 |
-| Formada (concluiu) | 100 |
-| Evadiu (entrou e não concluiu) | 66 |
-
-> **Universo de evasão atual:** 166 alunas · **Taxa parcial:** ~39,8% *(n pequeno — tratar como hipótese até os demais status chegarem).*
-
-### Divisão treino/teste
-- **`train_test_split`** com `test_size=0.2` e **estratificação** (`stratify=y`) para manter a proporção de evasão nos dois lados, `random_state=42`.
-- Pré-processamento (imputação constante + One-Hot Encoding) encapsulado no `Pipeline`, aprendendo **só no treino**.
-- **Modelo:** `LogisticRegression(max_iter=1000, class_weight='balanced')`.
-- **Trava:** o treino só dispara com ≥ 300 alunas com target — hoje o notebook avisa e espera.
-
-Nos testes exploratórios (qui-quadrado), nenhum fator isolado apresentou associação significativa ainda (`p > 0,05` em faixa etária, escolaridade, raça/etnia e renda), com alerta de células esperadas < 5 — coerente com o `n` pequeno.
+Essa não é uma formalidade. Um modelo que ordena risco de evasão, se usado para decidir desligamento ou corte de bolsa, transforma uma ferramenta de acolhimento em **máquina de exclusão** — e faz isso justamente com as alunas mais vulneráveis, que são as que ele mais aponta.
 
 ---
 
-## 🚀 Possíveis melhorias do modelo
+## 🤝 FixFly — a camada de acolhimento
 
-- **Aumentar o volume de target:** integrar os status das demais turmas para ultrapassar a trava de 300 e ganhar poder estatístico.
-- **Incorporar variáveis comportamentais:** frequência, notas e engajamento por módulo (mencionados na proposta, ainda não presentes no dataset atual) — provavelmente os preditores mais fortes.
-- **Testar outros algoritmos:** Random Forest, Gradient Boosting (XGBoost/LightGBM) e comparar com a regressão logística, sempre priorizando **recall da classe "Evadiu"**.
-- **Ajuste de threshold:** calibrar o limiar de decisão para o custo real (é melhor um falso positivo — oferecer apoio a quem não precisava — do que perder uma aluna em risco).
-- **Explicabilidade:** usar SHAP / coeficientes para transformar o modelo em fatores de risco acionáveis e transparentes para a equipe da Fly.
-- **Validação cruzada estratificada** em vez de um único split, dado o tamanho da amostra.
-- **Enriquecimento externo (bases já disponíveis no repositório):** integrar o `beneficio_pedemeia.csv` para estimar elegibilidade a programas de permanência e o `tx_rend_brasil_regioes_ufs_2023.xlsx` como benchmark regional de evasão — hoje ambas estão baixadas mas ainda fora do pipeline. Cruzar também com dados de mercado (RAIS/CAGED por CBO) para o "Score de Futuro" (inserção e faixa salarial esperada).
-- **Métricas justas:** monitorar desempenho por subgrupo (raça, renda, região) para evitar que o modelo desfavoreça exatamente quem deveria proteger.
+> *"Chegar antes da evasão, nunca rotular ninguém."*
+
+O modelo, sozinho, entrega uma fila ordenada por risco — mas quem faz o acolhimento é gente, não algoritmo. O **FixFly** (`Prototivo-IAGenerativa-Fly.html`) é a ferramenta interna que transforma essa fila em ação da equipe da Fly, e é a resposta completa ao que a Estação 16 deixava como próximo passo.
+
+É uma aplicação web autocontida (HTML/CSS/JS, sem backend obrigatório) organizada em **seis páginas**:
+
+| Página | O que faz |
+|--------|-----------|
+| **Painel** | mostra a fila de prioridade e um controle de **capacidade da semana** — é esse número, definido pela equipe, e não o algoritmo, que decide o corte da fila |
+| **Ficha da aluna** | o que a inscrição respondeu e o que ficou em branco, para embasar a conversa |
+| **Mensagens** | gera rascunhos por trilha de apoio (abertura, acesso digital, rede de cuidado, logística, retomar contato) e por canal (WhatsApp/e-mail) — a gestora sempre revisa e envia, **a ferramenta nunca envia sozinha** |
+| **Registro da conversa** | transforma anotação em texto livre em campos estruturados — é a **coluna de engajamento** que a base hoje não tem (limitação L5), sendo construída conversa por conversa |
+| **Base e conexão** | carrega a fila real exportada da Estação 15, liga a uma API que serve o `.joblib`, e inclui um leitor que propõe o mapeamento de cabeçalhos de planilhas novas para os 15 conceitos |
+| **Ficha técnica** | o model card completo dentro da ferramenta: métricas, variáveis, uso permitido/proibido e as limitações medidas |
+
+### As três regras que a ferramenta aplica na prática
+
+A camada de mensagens roda uma **guarda de linguagem** antes de qualquer texto aparecer na tela, garantindo que:
+
+1. **Nunca** aparece uma probabilidade ou número de risco para a aluna — nem na fila, nem em nenhuma mensagem;
+2. **Nunca** raça, orientação (LGBT+) ou deficiência viram motivo de contato, mesmo sendo variáveis usadas internamente pelo modelo — elas entram no cálculo, mas nunca atravessam para a tela;
+3. As trilhas de apoio são sempre oferecidas a **todas as alunas da turma**, nunca como diagnóstico individual — o modelo não sabe qual é a barreira de cada aluna, e supor errado quebra a confiança logo na primeira mensagem.
+
+Há também um **copiloto interno** (chat lateral) que responde perguntas sobre a fila e o modelo sempre citando a estação do notebook de onde veio a informação — e diz explicitamente quando a resposta **não existe** nos dados, em vez de inventar.
+
+> 🔐 **Uso restrito à equipe da Fly.** A ferramenta funciona inteira sobre um JSON colado manualmente — nenhuma função depende de rede — e pode opcionalmente se conectar a uma API que sirva o modelo `.joblib`.
 
 ---
 
-## ✅ Conclusão
+## ⚠️ Limitações, assumidas com todas as letras
 
-**O que já é resultado:**
-- Base unificada, congelada e limpa em massa — cada tipo de sujeira com seu padrão de correção em lote.
-- Target `evadiu` criado e documentado, com o universo correto (evadir ≠ não ser aprovada) e atualização automática via `criar_target`.
-- Perfil das inscritas mapeado: maioria preta e parda, escolarizada, jovem-adulta — a Fly alcança seu público-alvo.
-- Taxa de evasão parcial calculada, com honestidade sobre o `n`.
-
-**Próximos passos (em ordem):**
-1. Receber os status das demais turmas → re-executar o notebook (tudo se atualiza sozinho).
-2. Rodar a modelagem (a trava libera automaticamente) e olhar o **recall da classe "Evadiu"**.
-3. Responder à pergunta de ouro do TCC — *quais perfis precisam de mais apoio para concluir?* — e traduzir isso em recomendação concreta para a Fly.
-
-**Limitações honestas:** os formulários mudaram entre turmas (nem toda pergunta existe para todo mundo); o target ainda é parcial; os dados são autodeclarados; e correlação não é causa. Os achados apontam **onde apoiar**, não culpam perfis.
+| # | Limitação |
+|---|-----------|
+| **L1** | **Universo pequeno:** o conjunto de teste tem poucas dezenas de alunas, então o resultado depende muito de qual divisão treino/teste caiu — por isso o notebook usa validação cruzada repetida, nunca uma prova única. |
+| **L2** | **Alvo misto:** a maior parte do universo vem de uma fonte cuja definição de evasão inclui possível registro faltante. A taxa medida é um teto. |
+| **L3** | **Confundimento:** turma, período e fonte do desfecho estão colados. Efeito de contexto e efeito de perfil não se separam com estes dados. |
+| **L4** | **Cobertura:** só 21% das chaves dos backlogs cruzam com a base de inscrições — e quem não cruza pode ser sistematicamente diferente. |
+| **L5** | **Sem engajamento:** nenhuma variável de engajamento durante o curso está disponível — só variáveis declaradas na inscrição, antes do curso começar. É a limitação decisiva, e é a que a aba *Registro da conversa* do FixFly começa a resolver. |
 
 ---
 
-> *"A tecnologia possui um peso humano essencial e deve atuar como motor de transformação real e justiça social."* — a ciência de dados e a IA aqui estão plenamente direcionadas para fortalecer o ser humano e promover a inclusão educacional.
+## 🛣️ Próximos passos
+
+**O que mudaria o resultado** (pedido de dados para a Fly, em ordem de impacto):
+1. Presença e entrega de atividade, por semana e por aluna
+2. A mesma chave `aluna_id` em todas as bases (inscrições e backlogs)
+3. Status de saída padronizado, com data e motivo em lista fechada
+4. A pergunta sobre mãe/cuidadora em todos os formulários
+5. Backlogs com cabeçalho padronizado na primeira linha
+
+**O que o grupo ainda pode explorar com os dados atuais:**
+- Modelar isoladamente com a fonte mais confiável, como análise de sensibilidade
+- Testar um alvo alternativo, separando "sem registro de formatura" de evasão de fato
+- Levar a curva de priorização (Estação 15) para a Fly definir o limiar operacional com a equipe
+- Integrar as bases públicas já no repositório (`beneficio_pedemeia.csv`, `tx_rend_brasil_regioes_ufs_2023.xlsx`) como enriquecimento
+
+**Para o FixFly:**
+- Subir uma API em produção para substituir a colagem manual de JSON
+- Alimentar o modelo com os registros de conversa acumulados, fechando o ciclo que a limitação L5 aponta
+- Validar o roteiro de mensagens com a equipe de acolhimento da Fly antes do uso em turmas reais
+
+---
+
+## 👩‍💻 Time
+
+**Grupo Ada Lovelace (G4)** — Turma da Fly *"Mulheres In Tech: Data Science e IA · LGBTQIA+"*
+Brenda Amaral · Fernanda da Silva · Nadi Duno · Profana Buzato · Sheilliane Santos · Vicência Vitória Souza
+**Orientadora:** Andressa Freires · diversiData
+
+Projeto desenvolvido como Trabalho de Conclusão de Curso, em parceria com a Fly.
+
+<p align="center">Feito com rigor técnico e um compromisso: o modelo existe para chegar antes, nunca para rotular. 💛</p>
