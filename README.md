@@ -1,4 +1,4 @@
-# 🚀 FixFly — Previsão de Evasão na Fly Educação >
+# 🚀 FixFly — Previsão de Evasão na Fly Educação 
 ** Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
 
 Modelo preditivo de potencial de empregabilidade e mobilidade financeira para egressas da Fly Educação: um modelo que identifica quem tem mais risco de evadir, **para agir antes**. 
