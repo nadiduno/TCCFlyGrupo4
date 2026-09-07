@@ -1,24 +1,31 @@
-# 🚀 FixFly — prever para acolher, não para rotular
+# 🚀 FixFly — Previsão de Evasão na Fly Educação > ** Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
+Modelo preditivo de potencial de empregabilidade e mobilidade financeira para egressas da Fly Educação: um modelo que identifica quem tem mais risco de evadir, **para agir antes**. 
+**Grupo Ada Lovelace** — Brenda Amaral · Fernanda da Silva · Nadi Duno ·  Sheilliane Santos · Vitória Souza**
+Orientadora:** Andressa Freires
+Mulheres in Tech (MIT 23) - versão Data Science & IA LGBTQIA+ · Grupo 4 · Setembro 2026
 
-**Grupo Ada Lovelace (G4) · Turma Fly · diversiData**
+--- 
+## 📌 Contexto 
 
-> Cada Falso Negativo é uma mulher que a gente poderia ter acolhido **antes**. O modelo existe para chegar antes da evasão, nunca para rotular ninguém. 💛
+A evasão escolar é um dos principais desafios da educação brasileira e está associada a diversos fatores econômicos, sociais e demográficos, como renda familiar, região de residência, gênero, raça/cor, acesso a equipamento e internet, sobrecarga de trabalho e cuidado, entre outros. 
 
-🔗 **Repositório:** https://github.com/nadiduno/TCCFlyGrupo4
+O projeto **FixFly** parte de uma constatação central: quem desiste de estudar raramente o faz por falta de vontade, mas pelo **acúmulo de obstáculos** — cansaço do trabalho, aperto financeiro, isolamento e questões de saúde mental. A proposta une tecnologia e apoio humano por meio de modelos preditivos em Python que identificam estudantes em risco de evasão, e uma camada de IA que aciona a rede de acolhimento da ONG Fly Educação ( com possibilidades de mentoria, escuta ativa, suporte socioemocional) **antes que a desistência aconteça**. 
+
+O perfil das inscritas — maioria preta e parda, escolarizada e jovem-adulta (78% pretas + pardas). A entrega de ouro do modelo é uma **lista de fatores de risco acionáveis**: se computador/internet pesarem → empréstimo de equipamento; se horário pesar → turmas alternativas; se confiança inicial ou quesões de saúde mental pesarem → mentoria reforçada e acolhimento qualificado logo nas primeiras semanas. 
+
+**Pergunta principal:** Como fatores socioeconômicos e demográficos influenciam a evasão escolar e de que forma uma IA orientadora pode auxiliar estudantes em situação de vulnerabilidade por meio do acesso a informações sobre programas de apoio e permanência?
 
 ---
 
 ## 📖 Sobre este projeto
 
-Este é o Trabalho de Conclusão de Curso do **Grupo Ada Lovelace (G4)**, feito para a **Fly** dentro do programa de formar mulheres para o mercado de tecnologia.
+Este é o Trabalho de Conclusão de Curso do **Grupo Ada Lovelace (G4)**, feito para a **Fly Educação**, como parte do programa que se propoe a formar mulheres para o mercado de tecnologia.
 
-O ponto de partida não foi "vamos treinar um modelo". Foi uma pergunta concreta, feita por quem trabalha todo dia tentando manter mulheres dentro de um curso de tecnologia:
+O ponto de partida foi direcionado de uma pergunta concreta, feita por quem trabalha todo dia tentando manter mulheres dentro de um curso de tecnologia:
 
 > **Dá para prever, no momento da inscrição, quais alunas correm mais risco de evadir do curso da Fly, usando só o que elas responderam no formulário?**
 
-Repare na restrição: *só o que elas responderam no formulário*. Essa frase é o coração do trabalho — e é ela que produz a resposta mais importante do projeto, que você vai ler no fim deste README.
-
-O notebook pega os arquivos que a Fly disponibilizou e vai até o fim: entende a base, reconstrói as variáveis, testa hipóteses, treina modelos, mede com honestidade — e diz exatamente o que dá e o que não dá para afirmar hoje. A ferramenta **FixFly** transforma o resultado em ação de acolhimento na mão das gestoras.
+A partir disso, o notebook pega os arquivos que a Fly disponibilizou e vai até o fim: entende a base, reconstrói as variáveis, testa hipóteses, treina modelos, mede com honestidade — e diz exatamente o que dá e o que não dá para afirmar hoje. A ferramenta **FixFly** transforma o resultado em ação de acolhimento na mão das gestoras.
 
 ### As duas regras inegociáveis do projeto
 
