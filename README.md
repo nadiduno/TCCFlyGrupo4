@@ -1,5 +1,8 @@
-# 🚀 FixFly — Previsão de Evasão na Fly Educação > ** Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
+# 🚀 FixFly — Previsão de Evasão na Fly Educação >
+** Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
+
 Modelo preditivo de potencial de empregabilidade e mobilidade financeira para egressas da Fly Educação: um modelo que identifica quem tem mais risco de evadir, **para agir antes**. 
+
 **Grupo Ada Lovelace** — Brenda Amaral · Fernanda da Silva · Nadi Duno ·  Sheilliane Santos · Vitória Souza**
 Orientadora:** Andressa Freires
 Mulheres in Tech (MIT 23) - versão Data Science & IA LGBTQIA+ · Grupo 4 · Setembro 2026
