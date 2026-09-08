@@ -1,8 +1,5 @@
-# 🚀 FixFly — Previsão de Evasão na Fly Educação 
-** Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
-
+# 🚀 FixFly — Previsão de Evasão na Fly Educação > ** Uso de dados para identificar o risco de evasão na Fly Educação antes que ele aconteça.**
 Modelo preditivo de potencial de empregabilidade e mobilidade financeira para egressas da Fly Educação: um modelo que identifica quem tem mais risco de evadir, **para agir antes**. 
-
 **Grupo Ada Lovelace** — Brenda Amaral · Fernanda da Silva · Nadi Duno ·  Sheilliane Santos · Vitória Souza**
 Orientadora:** Andressa Freires
 Mulheres in Tech (MIT 23) - versão Data Science & IA LGBTQIA+ · Grupo 4 · Setembro 2026
@@ -145,7 +142,7 @@ Em cinco frases:
 1. As 163 colunas eram uma dúzia de perguntas escritas de **cinco jeitos diferentes**; a costura documentada recuperou variáveis que, sozinhas, seriam inutilizáveis.
 2. Só uma fração das inscrições chega ao fim do funil com perfil **e** desfecho — e a maior perda vem de **padronização de chave** (só 21% casam), não de dado inexistente.
 3. O alvo `evadiu` é uma mistura de duas definições, e a fonte majoritária confunde evasão com registro faltante. **A taxa medida (65% num universo de 60 alunas) é um teto, não a evasão real da Fly.**
-4. Nenhuma variável do formulário de inscrição tem associação mais que fraca com a evasão — e o **teste de embaralhamento** mede, com método, o quanto disso é sinal e o quanto é acaso (p empírico = **0,0244**: existe sinal real, ainda que fraco).
+4. Das **cinco hipóteses** levantadas antes de olhar os dados (acesso digital, cuidado, disponibilidade, renda e perfil), **nenhuma se confirmou** com força estatística — e a associação de região aparece **confundida com a turma** (V=0,552, quase igual). Nenhuma variável do formulário tem associação mais que fraca com a evasão — e o **teste de embaralhamento** mede, com método, o quanto disso é sinal e o quanto é acaso (p empírico = **0,0244**: existe sinal real, ainda que fraco).
 5. O gargalo é a **ausência de dados de engajamento durante o curso**. O notebook não descobriu quem evade: descobriu **qual dado a Fly precisa passar a coletar** para que a pergunta tenha resposta.
 
 O gráfico final (Estação 15) traduz isso em algo acionável: comparando a fila ordenada pelo modelo com uma busca aleatória, mostra **quantas alunas em risco a equipe alcança se procurar as primeiras N da fila** — a métrica que importa para quem faz o acolhimento.
@@ -325,7 +322,7 @@ Há também um **copiloto interno** (chat lateral) que responde perguntas sobre 
 ## 👩‍💻 Time
 
 **Grupo Ada Lovelace (G4)** — Turma da Fly *"Mulheres In Tech: Data Science e IA · LGBTQIA+"*
-Brenda Amaral · Fernanda da Silva · Nadi Duno · Profana Buzato · Sheilliane Santos · Vicência Vitória Souza
+Brenda Amaral · Fernanda da Silva · Nadi Duno · Sheilliane Santos · Vicência Vitória Souza
 **Orientadora:** Andressa Freires · diversiData
 
 Projeto desenvolvido como Trabalho de Conclusão de Curso, em parceria com a Fly.
