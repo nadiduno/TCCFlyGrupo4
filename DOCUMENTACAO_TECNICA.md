@@ -253,23 +253,3 @@ print(entraram.sum(), round(st[entraram].isin(["aprovada", "aprovadas"]).mean(),
 | Aviso de protótipo | toda tela que faz previsão avisa que é protótipo acadêmico e não serve para decisão sobre pessoas reais |
 
 ---
-
-## 12. Perguntas prováveis da banca, com a resposta medida
-
-**De onde vem o 39,8%?**
-Das 166 alunas aprovadas nas turmas 10 a 17, 66 não constam como formadas. Coluna `Aprovadas`, três linhas de código, sem cruzamento de chave.
-
-**Por que não usaram o backlog?**
-Metade das abas sem status, 21% das chaves casando, definição diferente de saída. Misturar produzia um alvo que o modelo confundia com a turma. Está documentado na Estação 6.3 e virou pedido à Fly.
-
-**O modelo funciona?**
-Ele ordena a fila melhor que o acaso em média (AP 0,52 contra 0,40), mas o teste de embaralhamento mostra que essa vantagem ainda cabe na sorte com 166 alunas (p = 0,33). Serve para priorizar acolhimento; não serve para afirmar quem vai sair.
-
-**Qual variável mais pesa?**
-Nenhuma tem associação forte. Região e raça aparecem na permutação, e as duas estão coladas na turma. Por isso a ferramenta nunca usa raça, orientação ou deficiência como motivo de contato.
-
-**E a hipótese de rede de cuidado?**
-Não pôde ser testada: a pergunta não existiu para nenhuma aluna do universo. Esse é o pedido número 4 à Fly.
-
-**O que muda o jogo?**
-Presença e entrega de atividade por semana. Evasão é um processo que acontece durante o curso, e o formulário de inscrição é uma foto tirada antes.
