@@ -1,6 +1,6 @@
 # Documentação Técnica — FlyFix
 
-**Grupo Ada Lovelace (G4)** · Turma Fly · diversiData · setembro 2026
+**Grupo Ada Lovelace (G4)** · Turma 23 · Fly Educação e Cultura · setembro 2026
 
 Este documento acompanha o notebook `Versao_17_TCC_EvasaoFly_G4CienciaDeDadosFlyV17.ipynb` e o README. Ele existe para responder, com número e estação, a três perguntas: **de onde vem cada número**, **quais decisões foram tomadas e por quê**, e **como reproduzir tudo**. Nada aqui foi estimado; todo valor sai de uma célula executada do notebook.
 
