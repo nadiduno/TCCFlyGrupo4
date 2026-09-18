@@ -6,12 +6,12 @@
 
 [![Author](https://img.shields.io/badge/Brenda%20Amaral-blueviolet%20)](https://www.linkedin.com/in/brendaamarals/)
 [![Author](https://img.shields.io/badge/Fernanda%20da%20Silva-blueviolet%20)](https://www.linkedin.com/in/fernanda-leticia-silva/)
-[![Author](https://img.shields.io/badge/Dev-Nadi%20Duno-blueviolet%20)](https://www.linkedin.com/in/nadiduno/)
+[![Author](https://img.shields.io/badge/DS/IA-Nadi%20Duno-blueviolet%20)](https://www.linkedin.com/in/nadiduno/)
 [![Author](https://img.shields.io/badge/Sheilliane%20Santos-blueviolet%20)](https://www.linkedin.com/in/sheillianesantos/)
 [![Author](https://img.shields.io/badge/Vicencia%20Vitória%20Souza-blueviolet%20)](www.linkedin.com/in/vicencia-vitoria)
 <br />
 ## Orientadora
-[![Coach](https://img.shields.io/badge/VAndressa%20Freires-violet%20)]([www.linkedin.com/in/vicencia-vitoria](https://www.linkedin.com/in/andressafreires/))
+[![Coach](https://img.shields.io/badge/Staff AI Native Builder-Andressa%20Freires-violet%20)]([www.linkedin.com/in/vicencia-vitoria](https://www.linkedin.com/in/andressafreires/))
 <br />
 <p align="center">
   <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white">
