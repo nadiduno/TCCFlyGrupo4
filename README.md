@@ -13,13 +13,12 @@
 ## Orientadora
 [![Coach](https://img.shields.io/badge/Staff%20AI%20Native%20Builder-Andressa%20Freires-violet%20)]([www.linkedin.com/in/vicencia-vitoria](https://www.linkedin.com/in/andressafreires/))
 <br />
-<p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white">
-  <img alt="Scikit-learn" src="https://img.shields.io/badge/Scikit--learn-1.3%2B-orange?logo=scikit-learn&logoColor=white">
-  <img alt="Pandas" src="https://img.shields.io/badge/Pandas-2.0%2B-purple?logo=pandas&logoColor=white">
-  <img alt="Status" src="https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen">
-</p>
-
+## Orientadora
+<img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white">
+<img alt="Scikit-learn" src="https://img.shields.io/badge/Scikit--learn-1.3%2B-orange?logo=scikit-learn&logoColor=white">
+<img alt="Pandas" src="https://img.shields.io/badge/Pandas-2.0%2B-purple?logo=pandas&logoColor=white">
+<img alt="Status" src="https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen">
+<br />
 ## 🌐 Versão Web
 
 <div>
